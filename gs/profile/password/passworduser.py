@@ -9,7 +9,7 @@ class PasswordUser(object):
     def set_password(password):
         raise NotImplementedError('TODO')
         
-    def add_password_verification(verificationId)
+    def add_password_verification(verificationId):
         raise NotImplementedError('TODO')
     
     def clear_password_verification():

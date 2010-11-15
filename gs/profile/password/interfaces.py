@@ -25,7 +25,7 @@ class IGSPasswordUser(Interface):
         
         None.'''
         
-    def add_password_verification_id(verificationId)
+    def add_password_verification_id(verificationId):
         '''Add a verfication ID to the password-reset table
         
         Arguments
