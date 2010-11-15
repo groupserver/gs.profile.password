@@ -5,7 +5,7 @@ from version import get_version
 
 version = get_version()
 
-setup(name='gs.group.home',
+setup(name='gs.profile.password',
     version=version,
     description="Setting and resetting a password on GroupServer.",
     long_description=open("README.txt").read() + "\n" +
@@ -27,7 +27,7 @@ setup(name='gs.group.home',
     url='http://groupserver.org/',
     license='other',
     packages=find_packages(exclude=['ez_setup']),
-    namespace_packages=['gs', 'gs.group'],
+    namespace_packages=['gs', 'gs.profile'],
     include_package_data=True,
     zip_safe=True,
     install_requires=[
