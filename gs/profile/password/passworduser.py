@@ -8,13 +8,14 @@ class PasswordUser(object):
         self.userInfo = userInfo
         self.context = userInfo.user
         
-    def set_password(password):
+    def set_password(self, password):
+        # TODO: Audit
         raise NotImplementedError('TODO')
         
-    def add_password_reset(resetId):
+    def add_password_reset(self, resetId):
         raise NotImplementedError('TODO')
     
-    def clear_password_reset():
+    def clear_password_reset(self):
         raise NotImplementedError('TODO')
 
 class PasswordUserFromId(object):

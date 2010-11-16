@@ -1,5 +1,6 @@
 # coding=utf-8
 from zope.interface import Interface
+from zope.schema import ASCIILine
 
 class IGSPasswordUser(Interface):
     '''A user who can manipulate passwords'''
@@ -63,4 +64,15 @@ class IGSPasswordUser(Interface):
         =======
         
         None.'''
+
+
+class ISetPassword(Interface):
+    """Schema for setting the user's password."""
+      
+    password1 = ASCIILine(title=u'Password',
+        description=u'Your new password. For security, your password '\
+          u'should contain a mixture of letters and numbers, and '\
+          u'must be over four letters long.',
+        required=True,
+        min_length=4)
 

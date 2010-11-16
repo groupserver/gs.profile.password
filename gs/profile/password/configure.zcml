@@ -36,4 +36,12 @@
     factory=".redirect.RedirectPasswordReset"
     provides="Products.GSRedirect.interfaces.IGSRedirect"
     name="password" />
+    
+  <!--Set Password Page-->
+  <browser:page
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="password.html"
+    class=".set.SetPasswordForm"
+    permission="zope2.ManageProperties" />
+    
 </configure>
