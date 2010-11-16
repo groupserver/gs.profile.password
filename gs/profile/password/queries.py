@@ -4,7 +4,6 @@ import sqlalchemy as sa
 
 class PasswordUserQuery(object):
     def __init__(self, da, userInfo=None):
-        self.context = context
         self.passwordResetTable = da.createTable('password_reset')
         self.userInfo = userInfo
         

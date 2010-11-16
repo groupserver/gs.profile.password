@@ -11,7 +11,8 @@ class RedirectPasswordReset(GSRedirectBase):
 
         if len(self.traverse_subpath) == 1:
             resetId = self.traverse_subpath[0]
-            pu = createObject('groupserver.PasswordUser', context, resetId)
+            pu = createObject('groupserver.PasswordUser', self.context, 
+                                resetId)
                         
             if pu:
                 userInfo = pu.userInfo

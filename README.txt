@@ -31,7 +31,18 @@ After ensuring I could start my Zope instance,  I started moving the
 code out of ``Products.GSProfile``. (Yes, the original code was messy.)
 
 ``GSRedirectLogin``
-    The code for redirecting the user tackled first.
+    The code for redirecting the user tackled first. I could test the
+    redirector by manually inserting rows into the ``password_reset``
+    table.
+    
+Changes to SQL
+--------------
+
+I altered the ``password_reset`` table on my development platform,
+to bring it in line with the code in ``sql/01-password.sql``::
+  
+  ALTER TABLE password_reset
+  ADD COLUMN RESET TIMESTAMP WITH TIME ZONE DEFAULT NULL;
 
 .. Resources
 

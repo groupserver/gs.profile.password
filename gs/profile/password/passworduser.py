@@ -22,7 +22,7 @@ class PasswordUserFromId(object):
     
     We do not always have a IGSUserInfo to hand when we want a password
     user. Sometimes we have a password-reset ID.'''
-    def __call__(context, resetId):
+    def __call__(self, context, resetId):
     
         da = context.zsqlalchemy
         queries = PasswordUserQuery(da)
