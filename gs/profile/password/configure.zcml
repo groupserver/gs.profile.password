@@ -31,4 +31,9 @@
     name="groupserver.PasswordUser"
     permission="zope.Public"/>
     
+  <!--Reset Password Redirect-->
+  <adapter for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
+    factory=".redirect.RedirectPasswordReset"
+    provides="Products.GSRedirect.interfaces.IGSRedirect"
+    name="password" />
 </configure>
