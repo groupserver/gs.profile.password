@@ -15,16 +15,16 @@ class PasswordUserQuery(object):
                     user_id = self.userInfo.id)
 
     def clear_reset_ids(self):
-        assert userInfo
+        assert self.userInfo
         prt = self.passwordResetTable
-        # d = prt.delete(prt.c.user_id == self.user_id)
-        u = prt.update(and_(prt.c.user_id == self.userInfo.id,
-                            prt.c.reset == None))
-        #d.execute()
+        u = prt.update(sa.and_(prt.c.user_id == self.userInfo.id,
+                                prt.c.reset == None))
         d = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
         u.execute(reset = d)
         
     def get_userId_from_resetId(self, resetId):
+        # TODO: Move to a different class, which the IGSResetPasswordUser
+        # factory can use.
         prt = self.passwordResetTable
         s = prt.select()
         s.append_whereclause(prt.c.verification_id == resetId)

@@ -31,6 +31,7 @@ class SetPasswordForm(SiteForm):
         assert not(liu.anonymous), 'Not logged in'
         pu = IGSPasswordUser(liu)
         pu.set_password(data['password1'])
+        pu.clear_password_reset()
                 
         self.status = u'Your password has been changed.'
         assert type(self.status) == unicode

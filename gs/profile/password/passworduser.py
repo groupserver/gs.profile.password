@@ -6,17 +6,36 @@ from queries import PasswordUserQuery
 class PasswordUser(object):
     def __init__(self, userInfo):
         self.userInfo = userInfo
-        self.context = userInfo.user
+        self.user = self.context = userInfo.user
+        self.__query = None
+        
+    @property
+    def query(self):
+        if self.__query == None:
+            da = self.context.zsqlalchemy
+            self.__query = PasswordUserQuery(da, self.userInfo)
+        return self.__query
         
     def set_password(self, password):
-        # TODO: Audit
-        raise NotImplementedError('TODO')
+        site_root = self.context.site_root()	
+
+        acl_users = site_root.acl_users
+        roles = self.user.getRoles()
+        domains = self.user.getDomains()
+        acl_users.userFolderEditUser(self.userInfo.id, password, roles, 
+                                        domains)
+
+        ca = site_root.cookie_authentication
+        ca.credentialsChanged(self.user, self.userInfo.id, password)
         
+        # TODO: Audit
+    
     def add_password_reset(self, resetId):
         raise NotImplementedError('TODO')
     
     def clear_password_reset(self):
-        raise NotImplementedError('TODO')
+        self.query.clear_reset_ids()
+        # TODO: Audit
 
 class PasswordUserFromId(object):
     '''Create a Password User from a Reset ID

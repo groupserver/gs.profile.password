@@ -8,7 +8,7 @@ Development
 
 The core code for this module was originally written for the
 ``Products.CustomUserFolder`` module. The code from the old classes was
-moved to this new module, and deprication-warnings added to the old code.
+moved to this new module, and deprecation-warnings added to the old code.
  
 ``CustomUser``
     The code for setting a password, adding a password-reset ID, and
@@ -26,7 +26,7 @@ moved to this new module, and deprication-warnings added to the old code.
 ``UserQueries``
     The code for performing queries was taken from the old
     ``UserQueries`` class and put into ``PasswordUserQuery``. Some
-    quieries hard-coded into the ``CustomUserFolder`` were also moved
+    queries hard-coded into the ``CustomUserFolder`` were also moved
     into the new class.
 
 After ensuring I could start my Zope instance,  I started moving code
@@ -38,16 +38,39 @@ two modules.)
     redirector by manually inserting rows into the ``password_reset``
     table. This allowed me to test the ``groupserver.PasswordUser``
     factory, which in turn allowed me to test the queries.
+    
+    However, I think I need to change this code some more. The 
+    ``IGSPasswordUser`` is not the right interface for the redirector to
+    instantiate. Instead I think a special user for redirecting is 
+    needed. The ``groupserver.PasswordUser`` factory can instantiate
+    the ``IGSPasswordResetUser``, which can say if a reset-ID has been
+    used or not. Anyway, that is for the future. Lets press on.
 
 ``SetPasswordForm``
-    The *Change Password* form has been around for a
-    while, and it needed a clean-up. To do this I created the
-    ``gs.content.form.form.SiteForm`` abstract base class. The Change
-    Password form inherits from that, which cleans up the imports
-    a *lot*. 
+    The ``/r/password`` redirector goes to the *Change Password* form.
+    This form has been around for a while, and it needed a clean-up. To
+    do this I created the ``gs.content.form.form.SiteForm`` abstract
+    base class. The Change Password form inherits from that, which
+    cleans up the imports a *lot*.
     
     At this point I also simplified the schema for setting a password. It
-    is now a single text entry, rather than two password entries.
+    is now a single text entry, rather than two password entries. At this
+    point I can check that the form goes, and even check the adaptor from
+    ``IGSUserInfo`` to ``IGSPasswordUser``; sure the implementation hits
+    ``raise NotImplementedError('TODO')``, but that at least proves
+    that I called the right thing!
+
+Now the big change. I copied the ``set_password`` code out of
+``CustomUser``. The code is simplified, because I cannot think of a
+single case where ``updateCookies`` is not set to true! Now I can test 
+setting a password. It goes, except for the lack of audit trails, and 
+not clearing the IDs.
+
+**Oh!** Clearing the IDs. Right, the actual point of this exercise! The
+code, in ``queries.PasswordUserQuery`` was cobbled together from some
+existing queries in ``gs.group.member.invite``. It writes a date in
+all current password-reset rows for the user (as there could be more
+than one!)
     
 Changes to SQL
 --------------
