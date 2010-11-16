@@ -25,28 +25,28 @@ class IGSPasswordUser(Interface):
         
         None.'''
         
-    def add_password_verification_id(verificationId):
+    def add_password_reset_id(resetId):
         '''Add a verfication ID to the password-reset table
         
         Arguments
         =========
         
-        ``verificationId``
-            The verification ID to set.
+        ``resetId``
+            The reset ID to set.
           
         Side-Effects
         ============
         
         Adds a row to the ``PASSWORD_RESET`` table that contains the
-        ``verificationId``.
+        ``resetId``.
 
         Returns
         =======
         
         None.'''
     
-    def clear_password_verification_ids():
-        '''Clear the password-reset verification IDs for the user.
+    def clear_password_reset():
+        '''Clear the password-reset reset IDs for the user.
                 
         Arguments
         =========
