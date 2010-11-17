@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="string:${view/label}: ${view/userInfo/name}: ${view/siteInfo/get_name}"/>
@@ -27,17 +27,15 @@
         </tal:block>
       </dl>
     </div>
-    <tal:block metal:fill-slot="contextnavigation">
-      <span 
-        tal:replace="structure provider:groupserver.ProfileContextMenu">
-        Context Menu
-      </span>
-    </tal:block>
+    <tal:block metal:fill-slot="contextnavigation">&#160;</tal:block>
     <tal:block metal:fill-slot="body"
       tal:define="siteName view/siteInfo/get_name">
       <h1 tal:content="view/label">Set Password</h1>
       <p>
-        To set your password, enter it in the entry below and click the
+        <strong>Hi 
+        <span class="fn" 
+          tal:content="view/userInfo/name">member</span>!</strong>
+        To reset your password, enter it in the entry below and click the
         <samp class="button"
           tal:define="action python:[a for a in view.actions][0].label"
           tal:content="action">Big R</samp>

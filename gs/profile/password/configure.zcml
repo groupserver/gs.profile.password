@@ -63,6 +63,12 @@
     provides="Products.GSRedirect.interfaces.IGSRedirect"
     name="password" />
 
+  <browser:page
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="reset_password.html"
+    class=".reset.ResetPasswordForm"
+    permission="zope2.ManageProperties" />
+
   <!-- The error pages -->
   <browser:page 
     for="Products.GSContent.interfaces.IGSSiteFolder"
@@ -81,3 +87,4 @@
     permission="zope2.Public" />
 
 </configure>
+

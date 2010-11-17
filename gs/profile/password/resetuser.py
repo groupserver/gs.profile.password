@@ -12,7 +12,7 @@ class ResetPasswordUser(GSUserInfo):
     @property
     def passwordSetUrl(self):
         if self.__passwordSetUrl == None:
-            self.__passwordSetUrl = '%s/password.html' % self.url
+            self.__passwordSetUrl = '%s/reset_password.html' % self.url
         return self.__passwordSetUrl
     
     @property
