@@ -1,6 +1,7 @@
 # coding=utf-8
 from zope.interface import Interface
 from zope.schema import ASCIILine
+from Products.CustomUserFolder.interfaces import IGSUserInfo
 
 class IGSPasswordUser(Interface):
     '''A user who can manipulate passwords'''
@@ -65,6 +66,48 @@ class IGSPasswordUser(Interface):
         
         None.'''
 
+
+class IGSPasswordResetUser(IGSUserInfo):
+    def resetId_exists(resetId):
+        '''Is the reset ID exists
+        
+        Arguments
+        =========
+        
+        The reset ID.
+        
+        Side-Effects
+        ============
+        
+        None.
+        
+        Returns
+        =======
+        
+        ``True`` if the reset ID is exists, regardless of whether it is 
+        current or not; ``False`` otherwise.'''
+
+    def resetId_current(resetId):
+        '''Is the reset ID current
+        
+        Arguments
+        =========
+        
+        The reset ID.
+        
+        Side-Effects
+        ============
+        
+        None.
+        
+        Returns
+        =======
+        
+        ``True`` if the reset ID is current; ``False`` otherwise.'''
+
+    passwordSetUrl = ASCIILine(title=u'URL for the Set Password page',
+        description=u'The URL for the Set Password page for the user.',
+        required=True)
 
 class ISetPassword(Interface):
     """Schema for setting the user's password."""

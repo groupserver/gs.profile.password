@@ -37,24 +37,3 @@ class PasswordUser(object):
         self.query.clear_reset_ids()
         # TODO: Audit
 
-class PasswordUserFromId(object):
-    '''Create a Password User from a Reset ID
-    
-    We do not always have a IGSUserInfo to hand when we want a password
-    user. Sometimes we have a password-reset ID.'''
-    def __call__(self, context, resetId):
-    
-        da = context.zsqlalchemy
-        queries = PasswordUserQuery(da)
-        
-        uid = queries.get_userId_from_resetId(resetId)
-        assert uid, 'Cound not get a user ID for the reset ID %s' % resetID
-        
-        userInfo = createObject('groupserver.UserFromId', context, uid)
-        return PasswordUser(userInfo)
-
-PasswordUserFactory = Factory(
-                        PasswordUserFromId, 
-                        'Password User from ID',
-                        'Create a password user from a reset ID.')
-
