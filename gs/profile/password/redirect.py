@@ -25,7 +25,8 @@ class RedirectPasswordReset(GSRedirectBase):
                     uri = passwordResetUser.passwordSetUrl
                 else:
                     # TODO: audit
-                    uri = '/password-reset-used.html?resetId=' % resetId                
+                    uri = '/password-reset-used.html?resetId=%s' %\
+                        resetId                
         else:
             # the reset ID is not specified
             uri = '/password-reset-no-id.html'

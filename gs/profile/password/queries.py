@@ -44,7 +44,7 @@ class PasswordResetQuery(object):
 
     def resetId_status(self, resetId):
         prt = self.passwordResetTable
-        s = prt.select(prt.c.reset)
+        s = prt.select()
         s.append_whereclause(prt.c.verification_id == resetId)
         
         r  = s.execute().fetchone()
