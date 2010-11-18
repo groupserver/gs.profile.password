@@ -3,6 +3,70 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five"
   i18n_domain="groupserver">
+
+  <!--
+    - Requesting a Password Reset
+  -->
+
+  <browser:page
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    name="password-reset-request.html"
+    class=".request.RequestPasswordResetForm" 
+    permission="zope2.Public" />
+
+  <!--
+    - Resetting a Password
+  -->
+
+  <!--Password Reset User-->
+  <interface interface=".interfaces.IGSPasswordResetUser"/>
+  <adapter provides=".interfaces.IGSPasswordResetUser"
+    for="Products.CustomUserFolder.interfaces.IGSUserInfo"
+    permission="zope2.Public"
+    factory=".resetuser.ResetPasswordUser" />
+  <adapter provides=".interfaces.IGSPasswordResetUser"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    permission="zope2.Public"
+    factory="Products.CustomUserFolder.userinfo.GSUserInfo
+      .resetuser.ResetPasswordUser" />
+  <!--Register the utility to get a password user from a reset ID-->
+  <class class=".resetuser.ResetPasswordUserFromId">
+    <implements interface=".interfaces.IGSPasswordResetUser"/>
+  </class>
+  <utility factory=".resetuser.ResetPasswordUserFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="groupserver.PasswordResetUser"
+    permission="zope.Public"/>
+    
+  <!--Reset Password Redirect-->
+  <adapter for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
+    factory=".redirect.RedirectPasswordReset"
+    provides="Products.GSRedirect.interfaces.IGSRedirect"
+    name="password" />
+
+  <!-- Reset Password Page -->
+  <browser:page
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    name="reset_password.html"
+    class=".reset.ResetPasswordForm"
+    permission="zope2.ManageProperties" />
+
+  <!-- Reset Password Error Pages -->
+  <browser:page 
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    name="password-reset-no-id.html"
+    class=".errors.ResetNoId" 
+    permission="zope2.Public" />
+  <browser:page 
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    name="password-reset-used.html"
+    class=".errors.ResetIdUsed" 
+    permission="zope2.Public" />
+  <browser:page 
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    name="password-reset-not-found.html"
+    class=".errors.ResetIdNotFound" 
+    permission="zope2.Public" />
   
   <!--
     - Setting a Password
@@ -32,59 +96,6 @@
     name="password.html"
     class=".set.SetPasswordForm"
     permission="zope2.ManageProperties" />
-
-  <!--
-    - Resetting a Password
-  -->
-
-  <!--Password *Reset* User-->
-  <interface interface=".interfaces.IGSPasswordResetUser"/>
-  <adapter provides=".interfaces.IGSPasswordResetUser"
-    for="Products.CustomUserFolder.interfaces.IGSUserInfo"
-    permission="zope2.Public"
-    factory=".resetuser.ResetPasswordUser" />
-  <adapter provides=".interfaces.IGSPasswordResetUser"
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
-    permission="zope2.Public"
-    factory="Products.CustomUserFolder.userinfo.GSUserInfo
-      .resetuser.ResetPasswordUser" />
-  <!--Register the utility to get a password user from a reset ID-->
-  <class class=".resetuser.ResetPasswordUserFromId">
-    <implements interface=".interfaces.IGSPasswordResetUser"/>
-  </class>
-  <utility factory=".resetuser.ResetPasswordUserFactory"
-    provides="zope.component.interfaces.IFactory"
-    name="groupserver.PasswordResetUser"
-    permission="zope.Public"/>
-    
-  <!--Reset Password Redirect-->
-  <adapter for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
-    factory=".redirect.RedirectPasswordReset"
-    provides="Products.GSRedirect.interfaces.IGSRedirect"
-    name="password" />
-
-  <browser:page
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
-    name="reset_password.html"
-    class=".reset.ResetPasswordForm"
-    permission="zope2.ManageProperties" />
-
-  <!-- The error pages -->
-  <browser:page 
-    for="Products.GSContent.interfaces.IGSSiteFolder"
-    name="password-reset-no-id.html"
-    class=".errors.ResetNoId" 
-    permission="zope2.Public" />
-  <browser:page 
-    for="Products.GSContent.interfaces.IGSSiteFolder"
-    name="password-reset-used.html"
-    class=".errors.ResetIdUsed" 
-    permission="zope2.Public" />
-  <browser:page 
-    for="Products.GSContent.interfaces.IGSSiteFolder"
-    name="password-reset-not-found.html"
-    class=".errors.ResetIdNotFound" 
-    permission="zope2.Public" />
 
 </configure>
 

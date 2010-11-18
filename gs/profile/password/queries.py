@@ -5,17 +5,16 @@ import sqlalchemy as sa
 class PasswordUserQuery(object):
     def __init__(self, da, userInfo):
         self.passwordResetTable = da.createTable('password_reset')
+        assert userInfo
         self.userInfo = userInfo
         
     def set_reset_id(self, resetId):
-        assert userInfo
         prt = self.passwordResetTable
         i = prt.insert()
         i.execute(verification_id = resetId, 
                     user_id = self.userInfo.id)
 
     def clear_reset_ids(self):
-        assert self.userInfo
         prt = self.passwordResetTable
         u = prt.update(sa.and_(prt.c.user_id == self.userInfo.id,
                                 prt.c.reset == None))

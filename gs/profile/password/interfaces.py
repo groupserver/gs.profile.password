@@ -27,7 +27,7 @@ class IGSPasswordUser(Interface):
         
         None.'''
         
-    def add_password_reset_id(resetId):
+    def add_password_reset(resetId):
         '''Add a verfication ID to the password-reset table
         
         Arguments
@@ -118,4 +118,9 @@ class ISetPassword(Interface):
           u'must be over four letters long.',
         required=True,
         min_length=4)
+
+class IRequestPassword(Interface):
+    email = ASCIILine(title=u'Email Address',
+        description=u'Your email address.',
+        required=True)
 

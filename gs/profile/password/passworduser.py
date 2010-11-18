@@ -27,11 +27,11 @@ class PasswordUser(object):
 
         ca = site_root.cookie_authentication
         ca.credentialsChanged(self.user, self.userInfo.id, password)
-        
         # TODO: Audit
     
     def add_password_reset(self, resetId):
-        raise NotImplementedError('TODO')
+        self.query.set_reset_id(resetId)
+        # TODO: Audit
     
     def clear_password_reset(self):
         self.query.clear_reset_ids()
