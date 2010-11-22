@@ -5,7 +5,7 @@
   <tal:block metal:use-macro="context/@@groupserver_site_home_layout/page">
     <head>
       <title metal:fill-slot="title">
-        ID Not Found (404): Password Reset Error:
+        ID Not Found (404): Password Reset:
         <tal:block replace="view/siteInfo/name"/>
       </title>
       
@@ -61,9 +61,12 @@
         </div>
         <!--Lastly, give the technical details about the error. Bots may-->
         <!--find this useful.-->
-        <p id="technical">If you want to get all technical about it, 
-          <code>404 Not Found</code>. 
-          Make of that what you will. 
+        <p id="technical">Technical Description:
+          <code class="error"><span class="val">404</span>
+            <span class="description">Not Found</span></code>;
+            <span class="detail">ID: 
+              <code class="val"
+                tal:content="view/resetId" >abc123</code>.
         </p>
       </div>
     </body>

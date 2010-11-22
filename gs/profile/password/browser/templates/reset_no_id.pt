@@ -5,7 +5,7 @@
   <tal:block metal:use-macro="context/@@groupserver_site_home_layout/page">
     <head>
       <title metal:fill-slot="title">
-        Missing ID (400): Password Reset Error: 
+        Missing ID (400): Password Reset: 
         <tal:block replace="view/siteInfo/name"/>
       </title>
       
@@ -41,7 +41,7 @@
             which ensures you reset <em>your</em> password.
             However, this ID is missing from the link you followed:
           <code class="url" tal:content="view/linkAddress">a link</code>.
-            Please correct link: it should have some random letters
+            Please correct the link: it should have some random letters
             and numbers at the end.</p>
           <p>If you are still having trouble 
             <a href="#" 
@@ -53,9 +53,9 @@
         </div>
         <!--Lastly, give the technical details about the error. Bots may-->
         <!--find this useful.-->
-        <p id="technical">If you want to get all technical about it, 
-          <code>400 Bad Request</code>. 
-          Make of that what you will. 
+        <p id="technical">Technical Description:
+          <code class="error"><span class="val">400</span>
+            <span class="description">Bad Request</span></code>
         </p>
       </div>
     </body>
