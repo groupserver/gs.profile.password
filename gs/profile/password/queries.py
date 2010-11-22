@@ -29,8 +29,6 @@ class PasswordResetQuery(object):
         self.passwordResetTable = da.createTable('password_reset')
         
     def get_userId_from_resetId(self, resetId):
-        # TODO: Move to a different class, which the IGSResetPasswordUser
-        # factory can use.
         prt = self.passwordResetTable
         s = prt.select()
         s.append_whereclause(prt.c.verification_id == resetId)
