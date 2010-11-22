@@ -44,14 +44,20 @@ class RequestPasswordResetForm(SiteForm):
             fromAddr = get_support_email(self.context, self.siteInfo.id)
             msg = create_reset_message(userInfo, self.siteInfo,
                     email, fromAddr, resetId)
-            print msg
             notifyUser.send_message(msg, email, fromAddr)
+  
+            self.status = u'Instructions on how to reset your password '\
+                u'have been sent to <code class="email">%s</code>.' % \
+                email
         else:
-            # Hmmmm, issues.
-            assert NotImplementedError('Have not handled unknown addresses')
+            self.status = u'<span style="float: left; margin-right:'\
+                u' 0.3em;" class="ui-icon ui-icon-alert">&#160;</span>'\
+                u'Your password has <em>not</em> been reset '\
+                u'because the address <code class="email">%s</code> '\
+                u'is new to us. Please enter a different address.' % \
+                email
+            self.errors = True
             
-        self.status = u'Instructions on how to reset your password '\
-          u'have been sent to <code>%s</code>.' % email
         assert type(self.status) == unicode
 
     def handle_set_action_failure(self, action, data, errors):
