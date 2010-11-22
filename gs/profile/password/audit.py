@@ -56,7 +56,8 @@ class AuditEventFactory(object):
             event = ResetLoginEvent(context, event_id, date, userInfo,
                         siteInfo)
         elif code == RESET_ID_400:
-            raise NotImplementedError('TODO')
+            event = ResetLoginNoIdEvent(context, event_id, date,
+                        siteInfo)
         elif code == RESET_ID_404:
             raise NotImplementedError('TODO')
         elif code == RESET_ID_410:
@@ -193,8 +194,8 @@ class RequestResetEvent(BasicAuditEvent):
         return retval
 
 class RequestResetFailEvent(BasicAuditEvent):
-    ''' An audit-trail event representing a person clearing all reset
-        IDs.'''
+    ''' An audit-trail event representing a person entering in an
+    unknown address in the password-reset page.'''
     implements(IAuditEvent)
 
     def __init__(self, context, id, d, siteInfo, instanceDatum):
@@ -226,8 +227,8 @@ class RequestResetFailEvent(BasicAuditEvent):
         return retval
 
 class ResetLoginEvent(BasicAuditEvent):
-    ''' An audit-trail event representing a person clearing all reset
-        IDs.'''
+    ''' An audit-trail event representing a person logging in to reset
+        his or her password.'''
     implements(IAuditEvent)
 
     def __init__(self, context, id, d, userInfo, siteInfo):
@@ -250,6 +251,33 @@ class ResetLoginEvent(BasicAuditEvent):
         cssClass = u'audit-event gs-profile-password-%s' %\
           self.code
         retval = u'<span class="%s">Logging in for password '\
+            u'reset.</span>' % cssClass
+        retval = u'%s (%s)' % \
+          (retval, munge_date(self.context, self.date))
+        return retval
+
+class ResetLoginNoIdEvent(BasicAuditEvent):
+    ''' An audit-trail event representing a password-reset with no ID.'''
+    implements(IAuditEvent)
+
+    def __init__(self, context, id, d, siteInfo):
+        BasicAuditEvent.__init__(self, context, id, RESET_ID_400, d, 
+            None, None, siteInfo, None, None, None, SUBSYSTEM)
+    
+    def __unicode__(self):
+        retval = u'Password-reset on %s (%s) with no ID.' %\
+            (self.siteInfo.name,  self.siteInfo.id)
+        return retval
+        
+    def __str__(self):
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+    
+    @property
+    def xhtml(self):
+        cssClass = u'audit-event gs-profile-password-%s' %\
+          self.code
+        retval = u'<span class="%s">No ID with password '\
             u'reset.</span>' % cssClass
         retval = u'%s (%s)' % \
           (retval, munge_date(self.context, self.date))
