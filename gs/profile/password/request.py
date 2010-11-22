@@ -31,6 +31,7 @@ class RequestPasswordResetForm(SiteForm):
             notifyUser = IGSNotifyUser(u)
             passwordUser = IGSPasswordUser(u)
             
+            # TODO: audit
             # Add the ID to the database
             resetId = self.get_reset_id(userInfo, email)
             # --=mpj17=-- I hope that the verification ID *is* unique
@@ -50,6 +51,7 @@ class RequestPasswordResetForm(SiteForm):
                 u'have been sent to <code class="email">%s</code>.' % \
                 email
         else:
+            # TODO: audit
             self.status = u'<span style="float: left; margin-right:'\
                 u' 0.3em;" class="ui-icon ui-icon-alert">&#160;</span>'\
                 u'Your password has <em>not</em> been reset '\
