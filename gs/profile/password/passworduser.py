@@ -2,12 +2,20 @@
 from zope.component import createObject
 from zope.component.factory import Factory
 from queries import PasswordUserQuery
+from audit import Auditor, SET
 
 class PasswordUser(object):
     def __init__(self, userInfo):
         self.userInfo = userInfo
         self.user = self.context = userInfo.user
-        self.__query = None
+        self.__query = self.__auditor = None
+        
+    @property
+    def auditor(self):
+        if self.__auditor == None:
+            si = createObject('groupserver.SiteInfo', self.context)
+            self.__auditor = Auditor(self.context, si)
+        return self.__auditor
         
     @property
     def query(self):
@@ -27,7 +35,8 @@ class PasswordUser(object):
 
         ca = site_root.cookie_authentication
         ca.credentialsChanged(self.user, self.userInfo.id, password)
-        # TODO: Audit
+        
+        self.auditor.info(SET, self.userInfo)
     
     def add_password_reset(self, resetId):
         self.query.set_reset_id(resetId)
