@@ -40,7 +40,8 @@ class PasswordUser(object):
     
     def add_password_reset(self, resetId):
         self.query.set_reset_id(resetId)
-        self.auditor.info(ADD_RESET, self.userInfo)
+        # --=mpj17=-- Don't bother. This will not add munch information
+        # self.auditor.info(ADD_RESET, self.userInfo)
     
     def clear_password_reset(self):
         self.query.clear_reset_ids()

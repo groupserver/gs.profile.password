@@ -10,6 +10,7 @@ from gs.content.form.form import SiteForm
 from gs.profile.notify.interfaces import IGSNotifyUser
 from interfaces import IRequestPassword, IGSPasswordUser
 from createresetmessage import create_reset_message
+from audit import Auditor, REQUEST, REQUEST_FAIL
 
 class RequestPasswordResetForm(SiteForm):
     form_fields = form.Fields(IRequestPassword)
@@ -19,7 +20,14 @@ class RequestPasswordResetForm(SiteForm):
 
     def __init__(self, context, request):
         SiteForm.__init__(self, context, request)
-
+        self.__auditor = None
+        
+    @property
+    def auditor(self):
+        if self.__auditor == None:
+            self.__auditor = Auditor(self.context, self.siteInfo)
+        return self.__auditor
+        
     @form.action(label=u'Reset', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         email = data['email'].strip()
@@ -31,7 +39,8 @@ class RequestPasswordResetForm(SiteForm):
             notifyUser = IGSNotifyUser(u)
             passwordUser = IGSPasswordUser(u)
             
-            # TODO: audit
+            self.auditor.info(REQUEST, userInfo, email)
+
             # Add the ID to the database
             resetId = self.get_reset_id(userInfo, email)
             # --=mpj17=-- I hope that the verification ID *is* unique
@@ -51,7 +60,7 @@ class RequestPasswordResetForm(SiteForm):
                 u'have been sent to <code class="email">%s</code>.' % \
                 email
         else:
-            # TODO: audit
+            self.auditor.info(REQUEST_FAIL, instanceDatum=email)
             self.status = u'<span style="float: left; margin-right:'\
                 u' 0.3em;" class="ui-icon ui-icon-alert">&#160;</span>'\
                 u'Your password has <em>not</em> been reset '\
