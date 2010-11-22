@@ -1,5 +1,6 @@
 # coding=utf-8
 from urllib import quote
+from zope.component import createObject
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from gs.errormesg.baseerror import BaseErrorPage
 
@@ -35,8 +36,16 @@ class ResetIdUsed(ResetError):
         m = 'Hi! I tried resetting my password using the link %s but '\
             'I saw a Password Reset Link Used page. I was trying '\
             'to...' % self.linkAddress
+        self.__loggedInUser = None
         self.message = quote(m)
 
+    @property
+    def loggedInUser(self):
+        if self.__loggedInUser == None:
+            self.__loggedInUser = createObject('groupserver.LoggedInUser',
+                                    self.context)
+        return self.__loggedInUser
+        
     def __call__(self, *args, **kw):
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader('Content-Type', contentType)

@@ -43,10 +43,19 @@
             <code class="url" tal:content="view/linkAddress">a link</code>
             &#8212;  has already been used.
             You can either</p>
-          <ul>
+          <ul tal:condition="view/loggedInUser/anonymous">
             <li><a href="/login.html?came_from=/">Login</a> or</li>
             <li><a href="/reset_password.html">Reset your password 
                 again.</a>
+          </ul>
+          <ul tal:condition="not:view/loggedInUser/anonymous">
+            <li><a href="/">View the <strong>homepage</strong></a> of 
+              <span class="site" tal:content="view/siteInfo/name">this
+                site</span></li>
+            <li><a href="#"
+              tal:attributes="href view/loggedInUser/url">View your
+                <strong>profile,</strong></a> which lists all your
+                <strong>groups.</strong></li>
           </ul>
           <p>If you are still having trouble 
             <a href="#" 
