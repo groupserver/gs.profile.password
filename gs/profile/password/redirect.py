@@ -3,7 +3,8 @@ from zope.component import createObject
 from Products.GSRedirect.view import GSRedirectBase
 from Products.GSProfile.utils import login
 from resetuser import ResetIdNotFoundError
-from audit import Auditor, RESET_LOGIN, RESET_ID_400, RESET_ID_404
+from audit import Auditor, RESET_LOGIN, RESET_ID_400, RESET_ID_404,\
+    RESET_ID_410
 
 class RedirectPasswordReset(GSRedirectBase):
     def __call__(self):
@@ -28,7 +29,8 @@ class RedirectPasswordReset(GSRedirectBase):
                     login(self.context, passwordResetUser.user)
                     uri = passwordResetUser.passwordSetUrl
                 else:
-                    # TODO: audit
+                    auditor.info(RESET_ID_410, passwordResetUser, 
+                        resetId)
                     uri = '/password-reset-used.html?resetId=%s' %\
                         resetId                
         else:

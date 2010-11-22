@@ -62,7 +62,8 @@ class AuditEventFactory(object):
             event = ResetLoginIdNotFoundEvent(context, event_id, date,
                         siteInfo, instanceDatum)
         elif code == RESET_ID_410:
-            raise NotImplementedError('TODO')
+            event = ResetLoginIdUsedEvent(context, event_id, date,
+                        userInfo, siteInfo, instanceDatum)
         else:
             event = BasicAuditEvent(context, event_id, UNKNOWN, date, 
               userInfo, instanceUserInfo, siteInfo, groupInfo, 
@@ -310,6 +311,40 @@ class ResetLoginIdNotFoundEvent(BasicAuditEvent):
           self.code
         retval = u'<span class="%s">Password reset ID %s not '\
             u'found.</span>' % (cssClass, self.instanceDatum)
+        retval = u'%s (%s)' % \
+          (retval, munge_date(self.context, self.date))
+        return retval
+
+# RESET_ID_410
+class ResetLoginIdUsedEvent(BasicAuditEvent):
+    ''' An audit-trail event representing someone following a used
+    password-reset link.'''
+    implements(IAuditEvent)
+
+    def __init__(self, context, id, d, userInfo, siteInfo,
+                instanceDatum):
+        BasicAuditEvent.__init__(self, context, id, RESET_ID_410, d, 
+            userInfo, userInfo, siteInfo, None, instanceDatum, None,
+            SUBSYSTEM)
+    
+    def __unicode__(self):
+        retval = u'The user %s (%s) followed a used password-reset '\
+            u'link (%s) on %s (%s).' % \
+            (self.userInfo.name, self.userInfo.id,
+            self.instanceDatum,
+            self.siteInfo.name,  self.siteInfo.id)
+        return retval
+        
+    def __str__(self):
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+    
+    @property
+    def xhtml(self):
+        cssClass = u'audit-event gs-profile-password-%s' %\
+          self.code
+        retval = u'<span class="%s">Followed a used password-reset '\
+            u'link.</span>' % cssClass
         retval = u'%s (%s)' % \
           (retval, munge_date(self.context, self.date))
         return retval
