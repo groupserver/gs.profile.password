@@ -53,7 +53,8 @@ class AuditEventFactory(object):
             event = RequestResetFailEvent(context, event_id, date,
                         siteInfo, instanceDatum)
         elif code == RESET_LOGIN:
-            raise NotImplementedError('TODO')
+            event = ResetLoginEvent(context, event_id, date, userInfo,
+                        siteInfo)
         elif code == RESET_ID_400:
             raise NotImplementedError('TODO')
         elif code == RESET_ID_404:
@@ -164,7 +165,7 @@ class RequestResetEvent(BasicAuditEvent):
 
     def __init__(self, context, id, d, userInfo, siteInfo,
                     instanceDatum):
-        BasicAuditEvent.__init__(self, context, id,  CLEAR_RESET, d, 
+        BasicAuditEvent.__init__(self, context, id,  REQUEST, d, 
             userInfo, userInfo, siteInfo, None, instanceDatum, None,
             SUBSYSTEM)
     
@@ -197,7 +198,7 @@ class RequestResetFailEvent(BasicAuditEvent):
     implements(IAuditEvent)
 
     def __init__(self, context, id, d, siteInfo, instanceDatum):
-        BasicAuditEvent.__init__(self, context, id,  CLEAR_RESET, d, 
+        BasicAuditEvent.__init__(self, context, id,  REQUEST_FAIL, d, 
             None, None, siteInfo, None, instanceDatum, None,
             SUBSYSTEM)
     
@@ -220,6 +221,36 @@ class RequestResetFailEvent(BasicAuditEvent):
             u'<code class="email">%s</code> used to try and reset a'\
             u'password .</span>' % \
             (cssClass, self.instanceDatum)
+        retval = u'%s (%s)' % \
+          (retval, munge_date(self.context, self.date))
+        return retval
+
+class ResetLoginEvent(BasicAuditEvent):
+    ''' An audit-trail event representing a person clearing all reset
+        IDs.'''
+    implements(IAuditEvent)
+
+    def __init__(self, context, id, d, userInfo, siteInfo):
+        BasicAuditEvent.__init__(self, context, id, RESET_LOGIN, d, 
+            userInfo, userInfo, siteInfo, None, None, None, SUBSYSTEM)
+    
+    def __unicode__(self):
+        retval = u'Logging in %s (%s) and sending the user to the '\
+            u'reset password page on %s (%s). ' %\
+            (self.userInfo.name,  self.userInfo.id,
+             self.siteInfo.name,  self.siteInfo.id)
+        return retval
+        
+    def __str__(self):
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+    
+    @property
+    def xhtml(self):
+        cssClass = u'audit-event gs-profile-password-%s' %\
+          self.code
+        retval = u'<span class="%s">Logging in for password '\
+            u'reset.</span>' % cssClass
         retval = u'%s (%s)' % \
           (retval, munge_date(self.context, self.date))
         return retval
