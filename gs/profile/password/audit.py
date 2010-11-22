@@ -41,9 +41,11 @@ class AuditEventFactory(object):
         if code == SET:
             event = SetEvent(context, event_id, date, userInfo, siteInfo)
         elif code == ADD_RESET:
-            raise NotImplementedError('TODO')
+            event = AddResetEvent(context, event_id, date, userInfo,
+                        siteInfo)
         elif code == CLEAR_RESET:
-            raise NotImplementedError('TODO')
+            event = ClearResetEvent(context, event_id, date, userInfo,
+                        siteInfo)
         elif code == REQUEST:
             raise NotImplementedError('TODO')
         elif code == REQUEST_FAIL:
@@ -89,6 +91,65 @@ class SetEvent(BasicAuditEvent):
         cssClass = u'audit-event gs-profile-password-%s' %\
           self.code
         retval = u'<span class="%s">Set a password.</span>' % cssClass
+        retval = u'%s (%s)' % \
+          (retval, munge_date(self.context, self.date))
+        return retval
+
+class AddResetEvent(BasicAuditEvent):
+    ''' An audit-trail event representing a person resetting a
+        password.'''
+    implements(IAuditEvent)
+
+    def __init__(self, context, id, d, userInfo, siteInfo):
+        BasicAuditEvent.__init__(self, context, id,  ADD_RESET, d, 
+            userInfo, userInfo, siteInfo, None, None, None,
+            SUBSYSTEM)
+    
+    def __unicode__(self):
+        retval = u'%s (%s) reset a password on %s (%s).' %\
+           (self.userInfo.name, self.userInfo.id,
+            self.siteInfo.name, self.siteInfo.id)
+        return retval
+        
+    def __str__(self):
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+    
+    @property
+    def xhtml(self):
+        cssClass = u'audit-event gs-profile-password-%s' %\
+          self.code
+        retval = u'<span class="%s">Reset a password.</span>' % cssClass
+        retval = u'%s (%s)' % \
+          (retval, munge_date(self.context, self.date))
+        return retval
+
+class ClearResetEvent(BasicAuditEvent):
+    ''' An audit-trail event representing a person clearing all reset
+        IDs.'''
+    implements(IAuditEvent)
+
+    def __init__(self, context, id, d, userInfo, siteInfo):
+        BasicAuditEvent.__init__(self, context, id,  CLEAR_RESET, d, 
+            userInfo, userInfo, siteInfo, None, None, None,
+            SUBSYSTEM)
+    
+    def __unicode__(self):
+        retval = u'%s (%s) cleared all password reset IDs on %s (%s).' %\
+           (self.userInfo.name, self.userInfo.id,
+            self.siteInfo.name, self.siteInfo.id)
+        return retval
+        
+    def __str__(self):
+        retval = unicode(self).encode('ascii', 'ignore')
+        return retval
+    
+    @property
+    def xhtml(self):
+        cssClass = u'audit-event gs-profile-password-%s' %\
+          self.code
+        retval = u'<span class="%s">Cleared password reset '\
+            u'IDs.</span>' % cssClass
         retval = u'%s (%s)' % \
           (retval, munge_date(self.context, self.date))
         return retval

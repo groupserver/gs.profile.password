@@ -2,7 +2,7 @@
 from zope.component import createObject
 from zope.component.factory import Factory
 from queries import PasswordUserQuery
-from audit import Auditor, SET
+from audit import Auditor, SET, ADD_RESET, CLEAR_RESET
 
 class PasswordUser(object):
     def __init__(self, userInfo):
@@ -40,9 +40,9 @@ class PasswordUser(object):
     
     def add_password_reset(self, resetId):
         self.query.set_reset_id(resetId)
-        # TODO: Audit
+        self.auditor.info(ADD_RESET, self.userInfo)
     
     def clear_password_reset(self):
         self.query.clear_reset_ids()
-        # TODO: Audit
+        self.auditor.info(CLEAR_RESET, self.userInfo)
 
