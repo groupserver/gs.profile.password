@@ -33,8 +33,11 @@ setup(name='gs.profile.password',
     install_requires=[
         'setuptools',
         'gs.content.form',
+        'gs.errormesg',
         'gs.help',
+        'gs.profile.notify',
         'Products.CustomUserFolder',
+        'Products.GSRedirect',
         # -*- Extra requirements: -*-
     ],
     entry_points="""
