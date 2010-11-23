@@ -50,6 +50,17 @@
     name="reset_password.html"
     class=".reset.ResetPasswordForm"
     permission="zope2.ManageProperties" />
+  <!--Add the password page to the menu on the user-profile pages -->
+  <browser:menuItems
+    menu="user_profile_menu"
+    for="Products.CustomUserFolder.interfaces.ICustomUser">
+    <browser:menuItem 
+      action="password.html"
+      title="Change Password"
+      description="Change the password you use to log in"
+      order="5"
+      permission="zope2.ManageProperties"/>
+  </browser:menuItems>
 
   <!-- Reset Password Error Pages -->
   <browser:page 
