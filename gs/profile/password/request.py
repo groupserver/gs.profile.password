@@ -57,8 +57,8 @@ class RequestPasswordResetForm(SiteForm):
             notifyUser.send_message(msg, email, fromAddr)
   
             self.status = u'Instructions on how to reset your password '\
-                u'have been sent to <code class="email">%s</code>.' % \
-                email
+                u'have been sent to <code class="email">%s</code>. '\
+                u'Please check your email.' % email
         else:
             self.auditor.info(REQUEST_FAIL, instanceDatum=email)
             self.status = u'<span style="float: left; margin-right:'\
