@@ -18,7 +18,7 @@ class RedirectPasswordReset(GSRedirectBase):
                 passwordResetUser = \
                     createObject('groupserver.PasswordResetUser', 
                                     self.context, resetId)
-            except ResetIdNotFoundError as e:
+            except ResetIdNotFoundError, e:
                 auditor.info(RESET_ID_404, instanceDatum=resetId)
                 uri = '/password-reset-not-found.html?resetId=%s' % \
                     resetId
