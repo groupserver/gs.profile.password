@@ -10,7 +10,7 @@
 
   <browser:page
     for="Products.GSContent.interfaces.IGSSiteFolder"
-    name="reset-password.html"
+    name="reset_password.html"
     class=".request.RequestPasswordResetForm" 
     permission="zope2.Public" />
 
