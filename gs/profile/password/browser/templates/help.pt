@@ -1,0 +1,103 @@
+<div id="gs-profile-password" class="section">
+  <h2>Passwords</h2>
+  <p>
+    Your password is used to log in to a site.
+    You will set a password when you
+    <a href="#gs-profile-signup">sign up</a> or when you accept your 
+    first invitation.<!--TODO: link to the invitation section-->
+    However, you can
+    <a href="#gs-profile-password-change">change your password</a> at
+    any time.
+    In addition you can 
+    <a href="#gs-profile-password-reset">reset your password</a> if you
+    are having trouble logging in.
+  </p>
+  <p>
+    Your password protects your personal and private information.
+    Because of this you should be mindful of
+    <a href="#gs-profile-password-security">password security.</a>
+  </p>
+  <div id="gs-profile-password-change" class="section">
+    <h3>Change Your Password</h3>
+    <p>
+      To change your password carry out the following steps.
+    </p>
+    <ol>
+      <li>Log in, if you are not already logged in.</li>
+      <li>Go to your <cite class="page">Profile</cite> by clicking on 
+        your name, which is locate at the top right of the page.</li>
+      <li>Click on <samp class="link">Change Password</samp>.
+        The <cite class="page">Change Password</cite> page will be 
+        shown.</li>
+      <li>Enter your new password into the
+        <samp class="entry">Password</samp> entry.</li>
+      <li>Click the <samp class="button">Change</samp> button.
+        You password will be changed.</li>
+    </ol>
+  </div><!--gs-profile-password-change-->
+  <div id="gs-profile-password-reset" class="section">
+    <h3>Reset Your Password</h3>
+    <p>
+      To reset your password carry out the following steps.
+    </p>
+    <ol>
+      <li>Go to the 
+        <a href="/reset_password.html"><cite class="page">Reset 
+            Password</cite></a> 
+        page.</li>
+      <li>Enter your email address into the
+        <samp class="entry">Email Address</samp> entry.</li>
+      <li>Click the <samp class="button">Reset</samp> button.
+        An email message will be sent to you email account.
+        The message will have the subject <cite>Reset Password</cite> 
+        and will be sent from the support email-address for this 
+        site.</li>
+      <li>Open the email message that has been sent to you.</li>
+      <li>Click on the link in the email message.
+        The <cite class="page">Change Password</cite> will be 
+        shown.</li>
+      <li>Enter a new password in the 
+        <cite class="entry">Password</cite> entry.</li>
+      <li>Click the <cite class="button">Change</cite> button.
+        Your password will be changed.</li>
+    </ol>
+    <p class="note">
+      <strong class="label">Note</strong>
+      To ensure your security the link in the 
+      password-reset message can only be used once.
+    </p>
+  </div><!--gs-profile-password-reset-->
+  <div id="gs-profile-password-security" class="section">
+    <h3>Password Security</h3>
+    <p>
+      Passwords are shown in two different ways, depending on if you are
+      setting a password, or using a password to log in.
+    </p>
+    <p>
+      When you <em>set</em> a password &#8212; using either the
+      <a href="#gs-profile-password-change">change password,</a>
+      <a href="#gs-profile-password-reset">reset password,</a>
+      <a href="#gs-profile-signup">during sign up</a> or
+      when accepting your first invitation <!--TODO: Link--> &#8212;
+      you will be able to see your password.
+      This makes it easier to set.
+      However, anyone who looks at your screen will also be able to
+      see your password.
+      Be cautious about who can see your screen when you set a password.
+    </p>
+    <p>
+      When you <em>use</em> your password to
+      log in<!--TODO: link--> 
+      your password will be hidden: a series of <code>*</code> 
+      characters will <em>mask</em> what you type.
+      It is unlikely that anyone will be able to figure out your
+      password by looking at your screen.
+      However, be cautious about who can see your keyboard as you type.
+    </p>
+    <p>
+      Passwords must be at least four characters long. However,
+      longer passwords are harder to guess.
+    </p>
+  </div><!--gs-profile-password-security-->
+</div><!--gs-profile-password-->
+

@@ -6,11 +6,11 @@ from set import SetPasswordForm
 from interfaces import IGSPasswordUser
 
 class ResetPasswordForm(SetPasswordForm):
-    label = u'Reset Password'
+    label = u'Change Password'
     pageTemplateFileName = 'browser/templates/reset.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
-    @form.action(label=u'Reset', failure='handle_set_action_failure')
+    @form.action(label=u'Change', failure='handle_set_action_failure')
     def handle_set(self, action, data):
        
         # Using the logged in user, rather than self.context is
@@ -22,7 +22,7 @@ class ResetPasswordForm(SetPasswordForm):
         pu.set_password(data['password1'])
         pu.clear_password_reset()
                 
-        self.status = u'Your password has been reset. ' \
+        self.status = u'Your password has been changed. ' \
           'You can now '\
           '<strong>go to <a href="%s">your profile</a></strong> '\
           'to view your groups.' % self.userInfo.url
