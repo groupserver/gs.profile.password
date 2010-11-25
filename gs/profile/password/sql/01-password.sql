@@ -1,3 +1,5 @@
+SET CLIENT_MIN_MESSAGES = WARNING;
+
 CREATE TABLE PASSWORD_RESET (
     VERIFICATION_ID  TEXT                       PRIMARY KEY,
     USER_ID          TEXT                       NOT NULL,
