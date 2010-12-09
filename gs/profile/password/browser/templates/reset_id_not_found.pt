@@ -17,17 +17,17 @@
       
     </head>
     <body>
-      <div metal:fill-slot="externallinks" />
       <div metal:fill-slot="sitenavigation" id="sitenavigation">
         <ul>
-          <li>
+          <li class="ui-state-default ui-corner-top">
             <a href="/">Home</a>
           </li>
         </ul>
       </div>
-      <div metal:fill-slot="contextnavigation" />
-      <div metal:fill-slot="breadcrumb" />
-      <div metal:fill-slot="footer"/>
+      <div metal:fill-slot="externallinks">&#160;</div>
+      <div metal:fill-slot="contextnavigation">&#160;</div>
+      <div metal:fill-slot="breadcrumb">&#160;</div>
+      <div metal:fill-slot="footer">&#160;</div>
       <div metal:fill-slot="body" class="error-page">
         <h1>Password Reset Error</h1>
 

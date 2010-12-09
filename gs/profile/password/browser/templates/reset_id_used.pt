@@ -8,29 +8,26 @@
         Link Used (410): Password Reset: 
         <tal:block replace="view/siteInfo/name"/>
       </title>
-      
       <tal:block metal:fill-slot="metadata">
         <meta name="author" content="OnlineGroups.Net" />
         <meta name="description" 
           content="The password-reset link has already been used." />
       </tal:block>
-      
     </head>
     <body>
-      <div metal:fill-slot="externallinks" />
       <div metal:fill-slot="sitenavigation" id="sitenavigation">
         <ul>
-          <li>
+          <li class="ui-state-default ui-corner-top">
             <a href="/">Home</a>
           </li>
         </ul>
       </div>
-      <div metal:fill-slot="contextnavigation" />
-      <div metal:fill-slot="breadcrumb" />
-      <div metal:fill-slot="footer"/>
+      <div metal:fill-slot="externallinks">&#160;</div>
+      <div metal:fill-slot="contextnavigation">&#160;</div>
+      <div metal:fill-slot="breadcrumb">&#160;</div>
+      <div metal:fill-slot="footer">&#160;</div>
       <div metal:fill-slot="body" class="error-page">
         <h1>Password Reset Link Used</h1>
-
         <!--Appologise, and state what went wrong -->
         <p id="appology">Sorry, but the password-reset link you followed
           has already been used.</p>
