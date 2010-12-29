@@ -31,8 +31,8 @@
       <div metal:fill-slot="body" class="error-page">
         <h1>Password Reset Error</h1>
 
-        <!--Appologise, and state what went wrong -->
-        <p id="appology">Sorry, but the password-reset link you tried to
+        <!--Apologise, and state what went wrong -->
+        <p id="apology">Sorry, but the password-reset link you tried to
           use &#8212;
           <code class="url" tal:content="view/linkAddress">a link</code>
           &#8212; could not be found.</p>
@@ -51,9 +51,9 @@
               You will have to retype (or re-copy) the address if there
               are mistakes.</li>
           </ul>
-          <p>If you are still having trouble 
+          <p>If you are still having trouble,
             <a href="#" 
-              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Broken%20Password%20Reset&amp;body=${view/message}">email
+              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Broken%20Password%20Reset%20Link&amp;body=${view/message}">email
                 support</a> 
             with the specifics of your problem, and we will see what we
             can do to help. 

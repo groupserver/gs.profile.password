@@ -29,8 +29,8 @@
       <div metal:fill-slot="body" class="error-page">
         <h1>Password Reset Error</h1>
 
-        <!--Appologise, and state what went wrong -->
-        <p id="appology">Sorry, part of the password-reset link you
+        <!--Apologise, and state what went wrong -->
+        <p id="apology">Sorry, part of the password-reset link you
           followed is missing.</p>
         <!-- Give a detailed explanation about what went wrong, and -->
         <!--   what can be done.-->
@@ -41,7 +41,7 @@
           <code class="url" tal:content="view/linkAddress">a link</code>.
             Please correct the link: it should have some random letters
             and numbers at the end.</p>
-          <p>If you are still having trouble 
+          <p>If you are still having trouble,
             <a href="#" 
               tal:attributes="href string:mailto:${view/supportEmail}?Subject=Password%20Reset%20ID%20Missing&amp;body=${view/message}">email
                 support</a> 
