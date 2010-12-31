@@ -17,8 +17,8 @@ def create_reset_message(userInfo, siteInfo, toAddr, fromAddr, resetId):
     wrapper = TextWrapper(width=72)
     b = 'We received a request to reset your password at %s. '\
         'All you have to do is set a new password. To do this, '\
-        'please click the following link.:' % siteInfo.name
-    body = 'n'.join(wrapper.wrap(b))
+        'please click the following link.' % siteInfo.name
+    body = '\n'.join(wrapper.wrap(b))
     
     u = '%s/r/password/%s' % (siteInfo.url, resetId)
     d = {
