@@ -114,5 +114,12 @@
     permission="zope.Public"
     weight="2" />
 
+  <!-- Auditor -->
+  <utility 
+    factory=".audit.AuditEventFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="gs.profile.password"
+    permission="zope.Public" />
+
 </configure>
 
