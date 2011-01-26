@@ -5,7 +5,7 @@ from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import convert_int2b62, get_support_email
 from Products.CustomUserFolder.interfaces import IGSUserInfo
-from Products.GSProfile.emailaddress import address_exists
+from gs.profile.email.base.emailaddress import address_exists
 from gs.content.form.form import SiteForm
 from gs.profile.notify.interfaces import IGSNotifyUser
 from interfaces import IRequestPassword, IGSPasswordUser
