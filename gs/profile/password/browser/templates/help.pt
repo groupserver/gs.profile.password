@@ -59,7 +59,11 @@
       <li>Enter a new password in the 
         <cite class="entry">Password</cite> entry.</li>
       <li>Click the <cite class="button">Change</cite> button.
-        Your password will be changed.</li>
+        Your password will be changed.
+        <!--Ticket 480-->
+        Your email address will also be verified<!--TODO:Link-->
+        if you only have one address and it is not currently
+        verified.</li>
     </ol>
     <p class="note">
       <strong class="label">Note</strong>
