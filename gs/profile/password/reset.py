@@ -54,3 +54,17 @@ class ResetPasswordForm(SetPasswordForm):
             evu.add_verification_id(vid)
             evu.verify_email(vid)
 
+        # --=mpj17=-- The password-reset system can be used to breach
+        #   someone's privacy. First, an attacker adds the victim's 
+        #   address to a profile with no verified addresses, and removes 
+        #   all other addresses. Then the attacker can verify the 
+        #   address by going to the Password Reset page and filling it
+        #   out. Finally the attacker joins a bunch of groups and starts
+        #   spamming the victim.
+        #   
+        #   It seems a lot of work to send a bunch of spam, but it could
+        #   be automated. The solution should not be too hard: the
+        #   redirector should send the reset_id to this page. If the ID
+        #   is not current then the page should barf. That should solve
+        #   the issue because the attacker would have to know the ID.
+
