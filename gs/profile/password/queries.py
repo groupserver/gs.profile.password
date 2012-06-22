@@ -1,39 +1,46 @@
 # coding=utf-8
 import pytz, datetime
 import sqlalchemy as sa
+import getTable, getSession
+from zope.sqlalchemy import mark_changed
 
 class PasswordUserQuery(object):
-    def __init__(self, da, userInfo):
-        self.passwordResetTable = da.createTable('password_reset')
+    def __init__(self, userInfo):
+        self.passwordResetTable = getTable('password_reset')
         assert userInfo
         self.userInfo = userInfo
         
     def set_reset_id(self, resetId):
         prt = self.passwordResetTable
         i = prt.insert()
-        i.execute(verification_id = resetId, 
-                    user_id = self.userInfo.id)
+        session = getSession()
+        session.execute(i, params={'verification_id': resetId, 
+                                   'user_id': self.userInfo.id})
+        mark_changed(session)
 
     def clear_reset_ids(self):
         prt = self.passwordResetTable
         u = prt.update(sa.and_(prt.c.user_id == self.userInfo.id,
                                 prt.c.reset == None))
         d = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
-        u.execute(reset = d)
+        session = getSession()
+        session.execute(u, params={'reset': d})
+        mark_changed(session)
 
 class PasswordResetQuery(object):
     NOT_FOUND  = 0
     CURRENT   = 1
     RESET     = 2
-    def __init__(self, da):
-        self.passwordResetTable = da.createTable('password_reset')
+    def __init__(self):
+        self.passwordResetTable = getTable('password_reset')
         
     def get_userId_from_resetId(self, resetId):
         prt = self.passwordResetTable
         s = prt.select()
         s.append_whereclause(prt.c.verification_id == resetId)
 
-        r = s.execute().fetchone()
+        session = getSession()
+        r = session.execute(s).fetchone()
 
         retval = (r and r['user_id']) or ''
         assert type(retval) == str
@@ -44,7 +51,8 @@ class PasswordResetQuery(object):
         s = prt.select()
         s.append_whereclause(prt.c.verification_id == resetId)
         
-        r  = s.execute().fetchone()
+        session = getSession()
+        r  = session.execute(s).fetchone()
         
         if r:
             if r['reset'] == None:
