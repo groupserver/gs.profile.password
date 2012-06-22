@@ -20,8 +20,7 @@ class PasswordUser(object):
     @property
     def query(self):
         if self.__query == None:
-            da = self.context.zsqlalchemy
-            self.__query = PasswordUserQuery(da, self.userInfo)
+            self.__query = PasswordUserQuery(self.userInfo)
         return self.__query
         
     def set_password(self, password):

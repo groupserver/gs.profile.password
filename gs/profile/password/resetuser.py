@@ -18,8 +18,7 @@ class ResetPasswordUser(GSUserInfo):
     @property
     def query(self):
         if self.__query == None:
-            da = self.user.zsqlalchemy
-            self.__query = PasswordResetQuery(da)
+            self.__query = PasswordResetQuery()
         return self.__query
         
     def resetId_current(self, resetId):
@@ -41,9 +40,7 @@ class ResetPasswordUserFromId(object):
     We do not always have a IGSUserInfo to hand when we want a password
     user. Sometimes we have a password-reset ID.'''
     def __call__(self, context, resetId):
-    
-        da = context.zsqlalchemy
-        queries = PasswordResetQuery(da)
+        queries = PasswordResetQuery()
         
         s = queries.resetId_status(resetId)
         if s == queries.NOT_FOUND:
