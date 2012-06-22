@@ -1,7 +1,7 @@
 # coding=utf-8
 import pytz, datetime
 import sqlalchemy as sa
-import getTable, getSession
+from gs.database import getTable, getSession
 from zope.sqlalchemy import mark_changed
 
 class PasswordUserQuery(object):
