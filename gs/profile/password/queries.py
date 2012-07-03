@@ -43,7 +43,8 @@ class PasswordResetQuery(object):
         r = session.execute(s).fetchone()
 
         retval = (r and r['user_id']) or ''
-        assert type(retval) == str
+        assert type(retval) in (str, unicode), \
+            'Wrong return type %s' % type(retval)
         return retval
 
     def resetId_status(self, resetId):
