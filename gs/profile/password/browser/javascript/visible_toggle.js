@@ -1,6 +1,6 @@
 jQuery.noConflict();
 
-function GSProfilePasswordToggleVisibility (entryId, toggleId) {
+function GSProfilePasswordToggle (entryId, toggleId) {
     var entry = null, 
         toggle = null,
         visible = false;
@@ -19,7 +19,7 @@ function GSProfilePasswordToggleVisibility (entryId, toggleId) {
         return visibile;
     }
 
-    function toggle_visibility() {
+    function toggle_visibility () {
         visible = ! visible;
         if ( visible ) {
             set_visible();
@@ -45,4 +45,4 @@ function GSProfilePasswordToggleVisibility (entryId, toggleId) {
     return {
         get_visibility: function () { return get_visibility_value(); },
     }
-} // GSProfilePasswordToggleVisibility
+} // GSProfilePasswordToggle
