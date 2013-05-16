@@ -1,10 +1,11 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from Products.GSAuditTrail.queries import AuditQuery
 from audit import SET, SUBSYSTEM
 
+
 def password_set(context, user):
     '''Check if a password has ever been set.
-        
+
 Description
 -----------
 
@@ -16,7 +17,7 @@ for a profile-event that corresponds to a member setting a password.
 Arguments
 ---------
 
-  * ``context``: The Zope context, which is used to find the data 
+  * ``context``: The Zope context, which is used to find the data
     adapter.
   * ``user``: The GroupServer CustomUser instance that is to be checked.
 
@@ -33,16 +34,11 @@ None.
 Acknowledgements
 ---------------
 
-Thanks to Alice for suggesting that I trawl the audit-logs for the 
+Thanks to Alice for suggesting that I trawl the audit-logs for the
 set-password events.'''
     q = AuditQuery()
     items = q.get_instance_user_events(user.getId(), limit=128)
-    setPasswordItems = [i for i in items 
-        if (((i['subsystem'] == SUBSYSTEM) and 
-             (i['code'] == SET_PASSWORD)) or
-            ((i['subsystem'] == GS_PROFILE_PASSWORD_SUBSYSTEM) and
-             (i['code'] == SET)))]
+    setPasswordItems = [i for i in items if ((i['subsystem'] == SUBSYSTEM) and
+                                                 (i['code'] == SET))]
     retval = bool(setPasswordItems)
     return retval
-
-

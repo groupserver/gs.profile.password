@@ -1,6 +1,7 @@
-# coding=utf-8
-import time, md5
-from zope.component import createObject
+# -*- coding: utf-8 -*-
+import time
+import md5
+from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import convert_int2b62, get_support_email
@@ -12,6 +13,7 @@ from interfaces import IRequestPassword, IGSPasswordUser
 from createresetmessage import create_reset_message
 from audit import Auditor, REQUEST, REQUEST_FAIL
 
+
 class RequestPasswordResetForm(SiteForm):
     form_fields = form.Fields(IRequestPassword)
     label = u'Reset Password'
@@ -19,15 +21,13 @@ class RequestPasswordResetForm(SiteForm):
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, context, request):
-        SiteForm.__init__(self, context, request)
-        self.__auditor = None
-        
-    @property
+        super(RequestPasswordResetForm, self).__init__(context, request)
+
+    @Lazy
     def auditor(self):
-        if self.__auditor == None:
-            self.__auditor = Auditor(self.context, self.siteInfo)
-        return self.__auditor
-        
+        retval = Auditor(self.context, self.siteInfo)
+        return retval
+
     @form.action(label=u'Reset', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         email = data['email'].strip()
@@ -38,24 +38,24 @@ class RequestPasswordResetForm(SiteForm):
             userInfo = IGSUserInfo(u)
             notifyUser = IGSNotifyUser(u)
             passwordUser = IGSPasswordUser(u)
-            
+
             self.auditor.info(REQUEST, userInfo, email)
 
             # Add the ID to the database
             resetId = self.get_reset_id(userInfo, email)
             # --=mpj17=-- I hope that the verification ID *is* unique
             passwordUser.add_password_reset(resetId)
-            # --=mpj17=-- If we get to this point my faith in 
+            # --=mpj17=-- If we get to this point my faith in
             #   non-determinism was warranted.
-            
+
             #TODO: think about unverified addresses
-            
+
             # send the message
             fromAddr = get_support_email(self.context, self.siteInfo.id)
             msg = create_reset_message(userInfo, self.siteInfo,
                     email, fromAddr, resetId)
             notifyUser.send_message(msg, email, fromAddr)
-  
+
             self.status = u'Instructions on how to reset your password '\
                 u'have been sent to <code class="email">%s</code>. '\
                 u'Please check your email.' % email
@@ -68,7 +68,7 @@ class RequestPasswordResetForm(SiteForm):
                 u'is new to us. Please enter a different address.' % \
                 email
             self.errors = True
-            
+
         assert type(self.status) == unicode
 
     def handle_set_action_failure(self, action, data, errors):
@@ -83,4 +83,3 @@ class RequestPasswordResetForm(SiteForm):
         resetId = str(convert_int2b62(vNum))
         assert resetId
         return resetId
-

@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from zope.formlib import form
@@ -7,6 +7,7 @@ from gs.profile.email.base.emailuser import EmailUser
 from gs.profile.email.verify.emailverificationuser import EmailVerificationUser
 from set import SetPasswordForm
 from interfaces import IGSPasswordUser
+
 
 class ResetPasswordForm(SetPasswordForm):
     label = u'Change Password'
@@ -18,7 +19,7 @@ class ResetPasswordForm(SetPasswordForm):
         retval = createObject('groupserver.LoggedInUser', self.context)
         assert not(retval.anonymous), 'Not logged in'
         return retval
-        
+
     @form.action(label=u'Change', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         self.set_password(data['password1'])
@@ -44,27 +45,26 @@ class ResetPasswordForm(SetPasswordForm):
         # If A user only has one email address (most people),
         #   and that address is unverified,
         eu = EmailUser(self.context, self.loggedInUser)
-        if ((len(eu.get_addresses()) == 1) 
+        if ((len(eu.get_addresses()) == 1)
             and (len(eu.get_unverified_addresses()) == 1)):
             #  then the email address should be verified.
             email = eu.get_addresses()[0]
-            evu = EmailVerificationUser(self.context, self.loggedInUser, 
+            evu = EmailVerificationUser(self.context, self.loggedInUser,
                                         email)
             vid = '%s-password' % evu.create_verification_id()
             evu.add_verification_id(vid)
             evu.verify_email(vid)
 
         # --=mpj17=-- The password-reset system can be used to breach
-        #   someone's privacy. First, an attacker adds the victim's 
-        #   address to a profile with no verified addresses, and removes 
-        #   all other addresses. Then the attacker can verify the 
+        #   someone's privacy. First, an attacker adds the victim's
+        #   address to a profile with no verified addresses, and removes
+        #   all other addresses. Then the attacker can verify the
         #   address by going to the Password Reset page and filling it
         #   out. Finally the attacker joins a bunch of groups and starts
         #   spamming the victim.
-        #   
+        #
         #   It seems a lot of work to send a bunch of spam, but it could
         #   be automated. The solution should not be too hard: the
         #   redirector should send the reset_id to this page. If the ID
         #   is not current then the page should barf. That should solve
         #   the issue because the attacker would have to know the ID.
-

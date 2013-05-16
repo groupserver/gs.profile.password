@@ -1,10 +1,11 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.content.form.form import SiteForm
 from interfaces import ISetPassword, IGSPasswordUser
+
 
 class SetPasswordForm(SiteForm):
     form_fields = form.Fields(ISetPassword)
@@ -13,7 +14,7 @@ class SetPasswordForm(SiteForm):
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, user, request):
-        SiteForm.__init__(self, user, request)
+        super(SetPasswordForm, self).__init__(user, request)
         self.userInfo = IGSUserInfo(user)
 
     @form.action(label=u'Change', failure='handle_set_action_failure')
@@ -22,7 +23,7 @@ class SetPasswordForm(SiteForm):
         assert self.form_fields
         assert action
         assert data
-        
+
         # Using the logged in user, rather than self.context is
         # deliberate. By using the logged in user we prevent anyone from
         # even *accidently* changing the password of another user.
@@ -30,7 +31,7 @@ class SetPasswordForm(SiteForm):
         assert not(liu.anonymous), 'Not logged in'
         pu = IGSPasswordUser(liu)
         pu.set_password(data['password1'])
-                
+
         self.status = u'Your password has been changed.'
         assert type(self.status) == unicode
 
@@ -39,4 +40,3 @@ class SetPasswordForm(SiteForm):
             self.status = u'There was an error:'
         else:
             self.status = u'<p>There were errors:</p>'
-
