@@ -107,6 +107,16 @@
       permission="zope2.ManageProperties"/>
   </browser:menuItems>
 
+  <!-- Visibility Toggle -->
+  <browser:resource 
+    name="gs-profile-password-toggle-20130516.js"
+    file="browser/javascript/visible_toggle.js"
+    permission="zope2.Public" />
+  <browser:resource 
+    name="gs-profile-password-toggle-min-20130516.js"
+    file="browser/javascript/visible_toggle-min.js"
+    permission="zope2.Public" />
+
   <!--Help-->
   <browser:viewlet name="gs-profile-password-help"
     manager="gs.help.interfaces.IUserHelp"
