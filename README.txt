@@ -36,7 +36,7 @@ The ``gs.profile.password.redirect.RedirectPasswordReset`` code is the core
 of the password reset system. It looks up a unique ID in the `database`_
 and uses `user adaptors`_ to send a person to the correct reset password
 form. While it is not strictly a page it does have many page-like
-qualities, including a URL.
+qualities, including a URL ``/r/password/``.
 
 Set Password Forms
 ------------------
