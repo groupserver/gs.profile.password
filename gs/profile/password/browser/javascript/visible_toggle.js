@@ -38,7 +38,6 @@ function GSProfilePasswordToggle (entryId, toggleId) {
             set_hidden();
         }
         toggle.change(toggle_visibility);
-        entry.focus();
     }
     init(); // Note the automatic execution
 
