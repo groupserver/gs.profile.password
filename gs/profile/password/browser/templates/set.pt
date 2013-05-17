@@ -11,12 +11,6 @@
     <tal:block content="structure provider:groupserver.FormStatusMessage"
       define="errors view/errors; status view/status; widgets view/widgets"
       metal:fill-slot="messages">&#160;</tal:block>
-    <tal:block metal:fill-slot="contextnavigation">
-      <span 
-        tal:replace="structure provider:groupserver.ProfileContextMenu">
-        Context Menu
-      </span>
-    </tal:block>
     <tal:block metal:fill-slot="body"
       tal:define="siteName view/siteInfo/get_name">
       <h1 tal:content="view/label">Set Password</h1>
@@ -32,6 +26,15 @@
         <tal:block define="widgets view/widgets">
           <tal:block replace="structure provider:groupserver.FormWidgets"/>
         </tal:block>
+        <div id="gs-profile-password-set-toggle"
+             class="form-widget not-required gs-profile-password-toggle">
+          <input id="gs-profile-password-set-toggle-widget" 
+                 class="checkboxType" type="checkbox" 
+                 value="1" checked="checked" />
+          <label for="gs-profile-password-set-toggle-widget"
+                 title="Deselect if you are in a public place, like a cafe or library."
+                 class="checkboxLabel">Show password</label>
+        </div><!--gs-profile-password-set-toggle-->
         <div class="buttons" tal:condition="view/availableActions">
           <tal:block repeat="action view/actions">
             <div class="formelementbutton">
@@ -41,25 +44,9 @@
         </div><!--buttons-->
       </form>
     </tal:block>
-    <tal:block metal:fill-slot="javascript">
-      <script type="text/javascript"
-        src="/++resource++check_required-20071214.js">&#160;</script>
-      <script type="text/javascript"
-        tal:define="widgets view/widgets; 
-          button string:#form\\.actions\\.change"
-        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
-        alert("I have not been replaced.");
-      </script>
-      <script type="text/javascript"
-        src="/++resource++popup_help-20071218.js">&#160;</script>
-      <script type="text/javascript">
-          jQuery.noConflict();
-          jQuery(document).ready( function () {
-              GSPopupFormHelp.init('#set-password');
-              jQuery('#form\\.password1').focus();
-          });
-      </script>
-    </tal:block>
+    <script metal:fill-slot="javascript" type="text/javascript" 
+            src="/++resource++gs-profile-password-set-20130516.js"
+            defer="true">&#160;</script>
   </body>
 </html>
 

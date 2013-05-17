@@ -95,6 +95,10 @@
     name="password.html"
     class=".set.SetPasswordForm"
     permission="zope2.ManageProperties" />
+  <browser:resource 
+    name="gs-profile-password-set-20130516.js"
+    file="browser/javascript/set.js"
+    permission="zope2.Public" />
   <!--Add the password page to the menu on the user-profile pages -->
   <browser:menuItems
     menu="user_profile_menu"
