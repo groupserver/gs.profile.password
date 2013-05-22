@@ -8,10 +8,22 @@
     </title>
   </head>
   <body>
+    <ul metal:fill-slot="breadcrumb">
+      <li>
+        <a href="/" class="icon-alone">
+          <span aria-hidden="true" data-icon="&#x2302;"></span>
+          <span class="screen-reader-text">Site home page</span>
+        </a>
+      </li>
+      <li>
+        <a href="/login.html">Sign in</a>
+      </li>
+      <li tal:content="view/label">reset password</li>
+    </ul>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
       define="errors view/errors; status view/status; widgets view/widgets"
       metal:fill-slot="messages">&#160;</tal:block>
-    <tal:block metal:fill-slot="body">
+    <div id="gs-profile-password-request" metal:fill-slot="body">
       <h1 tal:content="view/label">Set Password</h1>
       <p>
         To reset your password, enter your email address in the entry
@@ -21,8 +33,9 @@
           tal:content="action">Big R</samp>
         button.
       </p>
-      <form enctype="multipart/form-data"  method="post" action="."
-        id="reset-password" tal:attributes="action request/URL">
+      <form id="reset-password" class="gs-content-js-required" 
+            enctype="multipart/form-data"  method="post" action="."
+            tal:attributes="action request/URL">
         <tal:block define="widgets view/widgets">
           <tal:block replace="structure provider:groupserver.FormWidgets"/>
         </tal:block>
@@ -34,26 +47,10 @@
           </tal:block>
         </div><!--buttons-->
       </form>
-    </tal:block>
-    <tal:block metal:fill-slot="javascript">
-      <script type="text/javascript"
-        src="/++resource++check_required-20071214.js">&#160;</script>
-      <script type="text/javascript"
-        tal:define="widgets view/widgets; 
-          button string:#form\\.actions\\.reset"
-        tal:content="provider:groupserver.RequiredWidgetsJavaScript">
-        alert("I have not been replaced.");
-      </script>
-      <script type="text/javascript"
-        src="/++resource++popup_help-20071218.js">&#160;</script>
-      <script type="text/javascript">
-          jQuery.noConflict();
-          jQuery(document).ready( function () {
-              GSPopupFormHelp.init('#reset-password');
-              jQuery('#form\\.email').focus();
-          });
-      </script>
-    </tal:block>
+    </div><!--gs-profile-password-request-->
+    <script type="text/javascript" metal:fill-slot="javascript">
+      document.getElementById('form.email').focus();
+    </script>
   </body>
 </html>
 
