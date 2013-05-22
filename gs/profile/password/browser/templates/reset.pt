@@ -9,11 +9,11 @@
   </head>
   <body>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
-    <tal:block metal:fill-slot="contextnavigation">&#160;</tal:block>
+               define="errors view/errors; status view/status; 
+                       widgets view/widgets"
+               metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body"
-      tal:define="siteName view/siteInfo/get_name">
+               tal:define="siteName view/siteInfo/get_name">
       <h1 tal:content="view/label">Set Password</h1>
       <p>
         <strong>Hello,
@@ -25,8 +25,9 @@
           tal:content="action">Big R</samp>
         button.
       </p>
-      <form enctype="multipart/form-data"  method="post" action="."
-        id="set-password" tal:attributes="action request/URL">
+      <form id="set-password" class="gs-content-js-required"
+            enctype="multipart/form-data" method="post" action="."
+            tal:attributes="action request/URL">
         <tal:block define="widgets view/widgets">
           <tal:block replace="structure provider:groupserver.FormWidgets"/>
         </tal:block>
