@@ -56,17 +56,16 @@ class RequestPasswordResetForm(SiteForm):
                     email, fromAddr, resetId)
             notifyUser.send_message(msg, email, fromAddr)
 
-            self.status = u'Instructions on how to reset your password '\
-                u'have been sent to <code class="email">%s</code>. '\
-                u'Please check your email.' % email
+            s = u'Instructions on how to reset your password have been sent '\
+                u'to <code class="email">{0}</code>. Please check your email '\
+                u'(including the <em>spam</em> or <em>junk</em> folder).'
+            self.status = s.format(email)
         else:
             self.auditor.info(REQUEST_FAIL, instanceDatum=email)
-            self.status = u'<span style="float: left; margin-right:'\
-                u' 0.3em;" class="ui-icon ui-icon-alert">&#160;</span>'\
-                u'Your password has <em>not</em> been reset '\
-                u'because the address <code class="email">%s</code> '\
-                u'is new to us. Please enter a different address.' % \
-                email
+            s = u'Your password has <em>not</em> been reset because the '\
+                u'address <code class="email">{0}</code> is new to us. Please '\
+                u'enter a different address.'
+            self.status = s.format(email)
             self.errors = True
 
         assert type(self.status) == unicode
