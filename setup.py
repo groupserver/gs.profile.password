@@ -32,17 +32,28 @@ setup(name='gs.profile.password',
     zip_safe=True,
     install_requires=[
         'setuptools',
+        'pytz',
+        'sqlalchemy',
+        'zope.cachedescriptors',
+        'zope.component',
+        'zope.formlib',
+        'zope.interface',
+        'zope.schema',
+        'zope.sqlalchemy',
+        'Zope2',
+        'gs.content.layout',
         'gs.content.form',
+        'gs.database',
         'gs.errormesg',
-        'gs.help',
+        'gs.help',  # For the viewlet
         'gs.profile.email.base',
         'gs.profile.email.verify',
         'gs.profile.notify',
         'Products.CustomUserFolder',
+        'Products.GSAuditTrail',
         'Products.GSRedirect',
-        # -*- Extra requirements: -*-
+        'Products.XWFCore',
     ],
     entry_points="""
     # -*- Entry points: -*-
     """,)
-
