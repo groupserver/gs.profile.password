@@ -12,7 +12,8 @@
                define="errors view/errors; status view/status; 
                        widgets view/widgets"
                metal:fill-slot="messages">&#160;</tal:block>
-    <tal:block metal:fill-slot="body"
+    <tal:block metal:fill-slot="utilitylinks"></tal:block>
+    <div id="gs-profile-password-reset" metal:fill-slot="body"
                tal:define="siteName view/siteInfo/get_name">
       <h1 tal:content="view/label">Set Password</h1>
       <p>
@@ -48,7 +49,7 @@
           </tal:block>
         </div><!--buttons-->
       </form>
-    </tal:block>
+    </div><!--gs-profile-password-reset-->
     <script metal:fill-slot="javascript" type="text/javascript" 
             src="/++resource++gs-profile-password-set-20130516.js"
             defer="true">&#160;</script>
