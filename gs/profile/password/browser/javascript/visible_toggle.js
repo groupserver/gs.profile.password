@@ -32,12 +32,18 @@ function GSProfilePasswordToggle (entryId, toggleId) {
         entry = jQuery(entryId);
         toggle = jQuery(toggleId);
         visible = Boolean(Number(toggle.val()));
-        if ( visible ) {
-            set_visible();
-        } else {
-            set_hidden();
+        try {
+            if ( visible ) {
+                set_visible();
+            } else {
+                set_hidden();
+            }
+            toggle.change(toggle_visibility);
+        } catch ( e ) {
+            // Changing the type attribute is not supported.
+            toggle.hide();
+            toggle.next('label').hide();
         }
-        toggle.change(toggle_visibility);
     }
     init(); // Note the automatic execution
 
