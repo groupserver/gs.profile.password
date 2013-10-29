@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  metal:use-macro="context/@@groupserver_layout/page">
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_layout/page">
   <head>
     <title metal:fill-slot="title">
       <span tal:replace="string:${view/label}: ${view/userInfo/name}: ${view/siteInfo/get_name}"/>
@@ -17,33 +17,34 @@
       </li>
       <li>
         <a href="/p/" title="Your profile">
-          <strong tal:content="view/userInfo/name">Me!</strong></a>
+        <strong tal:content="view/userInfo/name">Me!</strong></a>
       </li>
       <li tal:content="view/label">Set password</li>
     </ul>
     <tal:block content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
+               define="errors view/errors; status view/status;
+                       widgets view/widgets"
+               metal:fill-slot="messages">&#160;</tal:block>
     <tal:block metal:fill-slot="body"
-      tal:define="siteName view/siteInfo/get_name">
-      <h1 tal:content="view/label">Set Password</h1>
+               tal:define="siteName view/siteInfo/get_name">
+      <h1 tal:content="view/label">Set password</h1>
       <p>
         To set your password, enter it in the entry below and click the
         <samp class="button"
-          tal:define="action python:[a for a in view.actions][0].label"
-          tal:content="action">Big R</samp>
+              tal:define="action python:[a for a in view.actions][0].label"
+              tal:content="action">Big R</samp>
         button.
       </p>
-      <form id="set-password" class="gs-content-js-required" method="post" 
-            action="." enctype="multipart/form-data" 
+      <form id="set-password" class="gs-content-js-required" method="post"
+            action="." enctype="multipart/form-data"
             tal:attributes="action request/URL">
         <tal:block define="widgets view/widgets">
           <tal:block replace="structure provider:groupserver.FormWidgets"/>
         </tal:block>
         <div id="gs-profile-password-set-toggle"
              class="form-widget not-required gs-profile-password-toggle">
-          <input id="gs-profile-password-set-toggle-widget" 
-                 class="checkboxType" type="checkbox" 
+          <input id="gs-profile-password-set-toggle-widget"
+                 class="checkboxType" type="checkbox"
                  value="1" checked="checked" />
           <label for="gs-profile-password-set-toggle-widget"
                  title="Deselect if you are in a public place, like a cafe or library."
@@ -58,9 +59,8 @@
         </div><!--buttons-->
       </form>
     </tal:block>
-    <script metal:fill-slot="javascript" type="text/javascript" 
+    <script metal:fill-slot="javascript" type="text/javascript"
             src="/++resource++gs-profile-password-set-20130516.js"
             defer="true">&#160;</script>
   </body>
 </html>
-

@@ -1,17 +1,31 @@
 # -*- coding: utf-8 -*-
-import time
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+from __future__ import absolute_import
 import md5
+import time
 from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.XWFCore.XWFUtils import convert_int2b62, get_support_email
 from Products.CustomUserFolder.interfaces import IGSUserInfo
 from gs.profile.email.base.emailaddress import address_exists
-from gs.content.form.form import SiteForm
+from gs.content.form import SiteForm
 from gs.profile.notify.interfaces import IGSNotifyUser
-from interfaces import IRequestPassword, IGSPasswordUser
-from createresetmessage import create_reset_message
-from audit import Auditor, REQUEST, REQUEST_FAIL
+from .interfaces import IRequestPassword, IGSPasswordUser
+from .createresetmessage import create_reset_message
+from .audit import Auditor, REQUEST, REQUEST_FAIL
 
 
 class RequestPasswordResetForm(SiteForm):
