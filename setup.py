@@ -57,7 +57,7 @@ setup(name='gs.profile.password',
         'zope.sqlalchemy',
         'zope.tal',
         'zope.tales',
-        'zope.viewlet'
+        'zope.viewlet',
         'Zope2',
         'gs.content.layout',
         'gs.content.form',
