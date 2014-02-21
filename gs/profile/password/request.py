@@ -30,12 +30,21 @@ from .interfaces import IRequestPassword, IGSPasswordUser
 
 class RequestPasswordResetForm(SiteForm):
     form_fields = form.Fields(IRequestPassword)
-    label = 'Reset Password'
+    label = 'Reset password'
     pageTemplateFileName = 'browser/templates/request.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
     def __init__(self, context, request):
         super(RequestPasswordResetForm, self).__init__(context, request)
+
+    @Lazy
+    def abridgedSupport(self):
+        s = self.siteInfo.get_support_email()
+        if '@' not in s:
+            m = 'Support email address is not an email address.'
+            raise ValueError(m)
+        retval = '@{0}'.format(s.split('@')[1])
+        return retval
 
     @Lazy
     def auditor(self):
