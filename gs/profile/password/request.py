@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -13,19 +13,19 @@
 #
 ##############################################################################
 from __future__ import absolute_import, unicode_literals
-import md5
-import time
+from md5 import new as new_md5
+from time import asctime
 from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.XWFCore.XWFUtils import convert_int2b62, get_support_email
-from Products.CustomUserFolder.interfaces import IGSUserInfo
-from gs.profile.email.base.emailaddress import address_exists
 from gs.content.form import SiteForm
+from gs.profile.email.base.emailaddress import address_exists
 from gs.profile.notify.interfaces import IGSNotifyUser
-from .interfaces import IRequestPassword, IGSPasswordUser
-from .createresetmessage import create_reset_message
+from Products.CustomUserFolder.interfaces import IGSUserInfo
+from Products.XWFCore.XWFUtils import convert_int2b62, get_support_email
 from .audit import Auditor, REQUEST, REQUEST_FAIL
+from .createresetmessage import create_reset_message
+from .interfaces import IRequestPassword, IGSPasswordUser
 
 
 class RequestPasswordResetForm(SiteForm):
@@ -89,8 +89,8 @@ class RequestPasswordResetForm(SiteForm):
             self.status = '<p>There were errors:</p>'
 
     def get_reset_id(self, userInfo, email):
-        s = time.asctime() + email + userInfo.name + self.siteInfo.name
-        vNum = long(md5.new(s).hexdigest(), 16)
+        s = asctime() + email + userInfo.name + self.siteInfo.name
+        vNum = long(new_md5(s).hexdigest(), 16)
         resetId = str(convert_int2b62(vNum))
         assert resetId
         return resetId
