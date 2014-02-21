@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright © 2013 OnlineGroups.net and Contributors. -->
+<!-- All Rights Reserved. -->
+
+<!-- This software is subject to the provisions of the Zope Public -->
+<!-- License, Version 2.1 (ZPL).  A copy of the ZPL should accompany this -->
+<!-- distribution. -->
+
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED -->
+<!-- WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED -->
+<!-- WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. -->
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:browser="http://namespaces.zope.org/browser"
-  xmlns:five="http://namespaces.zope.org/five"
-  i18n_domain="groupserver">
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="groupserver">
 
   <!--
     - Requesting a Password Reset
   -->
 
   <browser:page
-    for="Products.GSContent.interfaces.IGSSiteFolder"
     name="reset_password.html"
-    class=".request.RequestPasswordResetForm" 
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    class=".request.RequestPasswordResetForm"
     permission="zope2.Public" />
 
   <!--
@@ -37,7 +47,7 @@
     provides="zope.component.interfaces.IFactory"
     name="groupserver.PasswordResetUser"
     permission="zope.Public"/>
-    
+
   <!--Reset Password Redirect-->
   <adapter for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
     factory=".redirect.RedirectPasswordReset"
@@ -51,26 +61,26 @@
     class=".reset.ResetPasswordForm"
     permission="zope2.ManageProperties" />
   <!-- Reset Password Error Pages -->
-  <browser:page 
+  <browser:page
     for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-no-id.html"
-    class=".errors.ResetNoId" 
+    class=".errors.ResetNoId"
     permission="zope2.Public" />
-  <browser:page 
+  <browser:page
     for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-used.html"
-    class=".errors.ResetIdUsed" 
+    class=".errors.ResetIdUsed"
     permission="zope2.Public" />
-  <browser:page 
+  <browser:page
     for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-not-found.html"
-    class=".errors.ResetIdNotFound" 
+    class=".errors.ResetIdNotFound"
     permission="zope2.Public" />
-  
+
   <!--
     - Setting a Password
   -->
-  
+
   <!--Password User-->
   <interface interface=".interfaces.IGSPasswordUser"/>
   <!--Register adaptor from a IGSUserInfo to a IPasswordUser-->
@@ -81,7 +91,7 @@
     for="Products.CustomUserFolder.interfaces.IGSUserInfo"
     permission="zope2.Public"
     factory=".passworduser.PasswordUser" />
-  <!--Register adaptor from a ICustomUser to a IPasswordUser, via a 
+  <!--Register adaptor from a ICustomUser to a IPasswordUser, via a
     - IGSUserInfo -->
   <adapter provides=".interfaces.IGSPasswordUser"
     for="Products.CustomUserFolder.interfaces.ICustomUser"
@@ -95,7 +105,7 @@
     name="password.html"
     class=".set.SetPasswordForm"
     permission="zope2.ManageProperties" />
-  <browser:resource 
+  <browser:resource
     name="gs-profile-password-set-20130516.js"
     file="browser/javascript/set.js"
     permission="zope2.Public" />
@@ -103,7 +113,7 @@
   <browser:menuItems
     menu="user_profile_menu"
     for="Products.CustomUserFolder.interfaces.ICustomUser">
-    <browser:menuItem 
+    <browser:menuItem
       action="password.html"
       title="Change Password"
       description="Change the password you use to log in"
@@ -112,11 +122,11 @@
   </browser:menuItems>
 
   <!-- Visibility Toggle -->
-  <browser:resource 
+  <browser:resource
     name="gs-profile-password-toggle-20130516.js"
     file="browser/javascript/visible_toggle.js"
     permission="zope2.Public" />
-  <browser:resource 
+  <browser:resource
     name="gs-profile-password-toggle-min-20130516.js"
     file="browser/javascript/visible_toggle-min.js"
     permission="zope2.Public" />
@@ -129,11 +139,10 @@
     weight="2" />
 
   <!-- Auditor -->
-  <utility 
+  <utility
     factory=".audit.AuditEventFactory"
     provides="zope.component.interfaces.IFactory"
     name="gs.profile.password"
     permission="zope.Public" />
 
 </configure>
-

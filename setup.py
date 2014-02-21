@@ -61,6 +61,7 @@ setup(name='gs.profile.password',
         'Zope2',
         'gs.content.layout',
         'gs.content.form',
+        'gs.core',
         'gs.database',
         'gs.errormesg',
         'gs.help',  # For the viewlet

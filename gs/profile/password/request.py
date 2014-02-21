@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 import md5
 import time
 from zope.cachedescriptors.property import Lazy
@@ -30,7 +30,7 @@ from .audit import Auditor, REQUEST, REQUEST_FAIL
 
 class RequestPasswordResetForm(SiteForm):
     form_fields = form.Fields(IRequestPassword)
-    label = u'Reset Password'
+    label = 'Reset Password'
     pageTemplateFileName = 'browser/templates/request.pt'
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
 
@@ -42,7 +42,7 @@ class RequestPasswordResetForm(SiteForm):
         retval = Auditor(self.context, self.siteInfo)
         return retval
 
-    @form.action(label=u'Reset', failure='handle_set_action_failure')
+    @form.action(label='Reset', failure='handle_set_action_failure')
     def handle_set(self, action, data):
         email = data['email'].strip()
         acl_users = self.context.acl_users
@@ -70,25 +70,23 @@ class RequestPasswordResetForm(SiteForm):
                     email, fromAddr, resetId)
             notifyUser.send_message(msg, email, fromAddr)
 
-            s = u'Instructions on how to reset your password have been sent '\
-                u'to <code class="email">{0}</code>. Please check your email '\
-                u'(including the <em>spam</em> or <em>junk</em> folder).'
+            s = 'Instructions on how to reset your password have been sent '\
+                'to <code class="email">{0}</code>. Please check your email '\
+                '(including the <em>spam</em> or <em>junk</em> folder).'
             self.status = s.format(email)
         else:
             self.auditor.info(REQUEST_FAIL, instanceDatum=email)
-            s = u'Your password has <em>not</em> been reset because the '\
-                u'address <code class="email">{0}</code> is new to us. Please '\
-                u'enter a different address.'
+            s = 'Your password has <em>not</em> been reset because the '\
+                'address <code class="email">{0}</code> is new to us. Please '\
+                'enter a different address.'
             self.status = s.format(email)
             self.errors = True
 
-        assert type(self.status) == unicode
-
     def handle_set_action_failure(self, action, data, errors):
         if len(errors) == 1:
-            self.status = u'There was an error:'
+            self.status = 'There was an error:'
         else:
-            self.status = u'<p>There were errors:</p>'
+            self.status = '<p>There were errors:</p>'
 
     def get_reset_id(self, userInfo, email):
         s = time.asctime() + email + userInfo.name + self.siteInfo.name
