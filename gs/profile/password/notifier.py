@@ -17,12 +17,11 @@ from zope.component import getMultiAdapter
 from zope.cachedescriptors.property import Lazy
 from gs.core import to_ascii
 from gs.profile.notify.sender import MessageSender
-UTF8 = 'utf-8'
 
 
 class ResetNotifier(object):
-    textTemplateName = 'gs-profile-password-reset.txt'
-    htmlTemplateName = 'gs-profile-password-reset.html'
+    textTemplateName = 'gs-profile-password-reset-message.txt'
+    htmlTemplateName = 'gs-profile-password-reset-message.html'
 
     def __init__(self, user, request):
         self.context = self.user = user
@@ -44,12 +43,12 @@ class ResetNotifier(object):
         assert retval
         return retval
 
-    def notify(self, siteInfo, userInfo):
+    def notify(self, siteInfo, userInfo, resetLink):
         s = 'Password reset at {0} (action required)'
         subject = s.format(siteInfo.name)
-        text = self.textTemplate(userInfo=userInfo)
-        html = self.htmlTemplate(userInfo=userInfo)
+        text = self.textTemplate(userInfo=userInfo, resetLink=resetLink)
+        html = self.htmlTemplate(userInfo=userInfo, resetLink=resetLink)
         ms = MessageSender(self.context, userInfo)
-        ms.send_message(subject.encode(UTF8), text, html)
+        ms.send_message(subject, text, html)
         self.request.response.setHeader(to_ascii('Content-Type'),
                                         self.oldContentType)
