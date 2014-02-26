@@ -29,166 +29,53 @@
       <p class="muted">
         To reset your password, carry out the steps below.
       </p>
-      <div id="gs-profile-password-reset-request-addressbook"
-           class="disclosureWidget">
+      <section id="gs-profile-password-reset-request-addressbook">
         <h2>
-          <a class="disclosureButton"
-             aria-controls="gs-profile-password-reset-request-addressbook-details"
-             role="button"><strong>1.</strong> Add
+          1. &quot;Whitelist&quot;
           <code class="email"
                 tal:content="view/siteInfo/get_support_email">support</code>
-          to your address book</a>
         </h2>
         <div id="gs-profile-password-reset-request-addressbook-details"
-             tal:define="s view/siteInfo/get_support_email"
-             class="disclosureShowHide" style="display: none;">
-          <p>
-            Adding the email address
+             tal:define="s view/siteInfo/get_support_email">
+          <p class="muted">
+            Add the email address
             <a tal:attributes="href string:mailto:${s}"
                href="#"><code class="email" tal:content="s">support</code></a>
-            makes it more likely that the
+            to your list of safe-senders (your <q>whitelist</q>).
+            This will make it more likely that the
            <cite>Reset password</cite> message will arrive in your inbox,
            and you will gain access to this site.
+           The guide
+           <a href="http://onlinegroups.net/blog/2014/02/25/how-to-whitelist-an-email-address/">&quot;How to whitelist an email address&quot;</a>
+           will help you.
           </p>
-          <section
-            id="gs-profile-password-reset-request-addressbook-details-gmail">
-            <h3>Google Gmail</h3>
-            <ol>
-              <li>
-                Sign in to you account at
-                <a target="_blank"
-                   href="https://mail.google.com">Gmail</a>
-              </li>
-              <li>
-                Click the
-                Settings cog
-                (<span class="icon-alone"
-                       data-icon="&#x2699;"></span>)
-                in the top-right corner and select
-                <samp>Settings</samp>
-              </li>
-              <li>
-                Click on
-                <samp>Filters</samp> and then
-                <samp>Create a new filter</samp>
-              </li>
-              <li>
-                In the
-                <samp>From</samp> field, add
-                <code tal:content="view/abridgedSupport">us</code>
-              </li>
-              <li>
-                In the
-                <samp>To</samp> field, add
-                <code tal:content="view/abridgedSupport">us</code>
-              </li>
-              <li>
-                Click
-                <samp>Create filter with this search</samp>
-              </li>
-              <li>
-                In the box headed
-                <cite>When a message arrives that matches this search</cite>
-                select
-                <samp>Never send it to spam</samp>
-                </li>
-                <li>
-                  Click the <samp>Create filter</samp> button
-                </li>
-            </ol>
-          </section>
-          <!--gs-profile-password-reset-request-addressbook-details-gmail-->
-          <section
-            id="gs-profile-password-reset-request-addressbook-details-outlook">
-            <h3>Microsoft Outlook.com</h3>
-            <ol>
-              <li>
-                Sign in to your account at
-                <a target="_blank" href="https://outlook.com">Outlook.com</a>
-              </li>
-              <li>
-                Visit <samp>More mail settings</samp>
-              </li>
-              <li>
-                Select <samp>Safe and blocked senders</samp>
-              </li>
-              <li>
-                Add
-                <code tal:content="view/abridgedSupport">us</code>
-                to the list of <samp>Safe senders</samp>
-              </li>
-              <li>
-                Add <code tal:content="s">us</code>
-                to the list of <samp>Safe mailing lists</samp>
-              </li>
-            </ol>
-          </section>
-          <!--gs-profile-password-reset-request-addressbook-details-outlook-->
-          <section
-            id="gs-profile-password-reset-request-addressbook-details-yahoo">
-            <h3>Yahoo! Mail</h3>
-            <ol>
-              <li>
-                Sign in to your account at
-                <a target="_blank"
-                   href="https://mail.yahoo.com">Yahoo! Mail</a>
-              </li>
-              <li>
-                Mouse over the Settings menu icon
-                (<span class="icon-alone"
-                       data-icon="&#x2699;"></span>)
-                and select <samp>Settings</samp>
-              </li>
-              <li>
-                Click <samp>Filters</samp>
-              </li>
-              <li>
-                Click <samp>Add</samp>
-              </li>
-              <li>
-                Enter <cite>Mail from <samp tal:content="s">us</samp></cite>
-                as the <samp>Filter Name</samp>
-              </li>
-              <li>
-                Add <code class="s">us</code> as the <samp>Sender</samp>
-              </li>
-              <li>
-                Select <samp>Inbox</samp> as the destination folder.
-              </li>
-              <li>
-                Click <samp>Save</samp>
-              </li>
-              <li>
-                Click <samp>Save</samp> again to return to your emails.
-              </li>
-            </ol>
-          </section>
-          <!--gs-profile-password-reset-request-addressbook-details-yahoo-->
         </div><!--gs-profile-password-reset-request-addressbook-details-->
-      </div>
-      <h2>2. Send a reset-password email</h2>
-      <p class="muted">
-        Enter your email address in the entry below and
-        click the
-        <samp class="button"
-              tal:define="action python:[a for a in view.actions][0].label"
-              tal:content="action">Big R</samp>
-        button.
-      </p>
-      <form id="reset-password" class="gs-content-js-required"
-            enctype="multipart/form-data"  method="post" action="."
-            tal:attributes="action request/URL">
-        <tal:block define="widgets view/widgets">
-          <tal:block replace="structure provider:groupserver.FormWidgets"/>
-        </tal:block>
-        <div class="buttons" tal:condition="view/availableActions">
-          <tal:block repeat="action view/actions">
-            <div class="formelementbutton">
-              <span tal:replace="structure action/render">Button</span>
-            </div>
+      </section><!--gs-profile-password-reset-request-addressbook-->
+      <section id="gs-profile-password-reset-request-send">
+        <h2>2. Send a reset-password email</h2>
+        <p class="muted">
+          Enter your email address in the entry below and
+          click the
+          <samp class="button"
+                tal:define="action python:[a for a in view.actions][0].label"
+                tal:content="action">Big R</samp>
+          button.
+        </p>
+        <form id="reset-password" class="gs-content-js-required"
+              enctype="multipart/form-data"  method="post" action="."
+              tal:attributes="action request/URL">
+          <tal:block define="widgets view/widgets">
+            <tal:block replace="structure provider:groupserver.FormWidgets"/>
           </tal:block>
-        </div><!--buttons-->
-      </form>
+          <div class="buttons" tal:condition="view/availableActions">
+            <tal:block repeat="action view/actions">
+              <div class="formelementbutton">
+                <span tal:replace="structure action/render">Button</span>
+              </div>
+            </tal:block>
+          </div><!--buttons-->
+        </form>
+      </section><!--gs-profile-password-reset-request-send-->
     </div><!--gs-profile-password-request-->
     <script type="text/javascript" metal:fill-slot="javascript">
       document.getElementById('form.email').focus();

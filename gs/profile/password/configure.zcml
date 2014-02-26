@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- Copyright © 2013 OnlineGroups.net and Contributors. -->
+<!-- Copyright © 2013, 2014 OnlineGroups.net and Contributors. -->
 <!-- All Rights Reserved. -->
 
 <!-- This software is subject to the provisions of the Zope Public -->
@@ -26,17 +26,33 @@
     class=".request.RequestPasswordResetForm"
     permission="zope2.Public" />
 
+  <!--Reset password messages -->
+  <browser:page
+    name="gs-profile-password-reset-message.html"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    class=".notifications.ResetMessage"
+    template="browser/templates/reset-message.pt"
+    permission="zope2.ManageProperties" />
+  <browser:page
+    name="gs-profile-password-reset-message.txt"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
+    class=".notifications.ResetMessageText"
+    template="browser/templates/reset-message-txt.pt"
+    permission="zope2.ManageProperties" />
+
   <!--
-    - Resetting a Password
+    - Resetting a password
   -->
 
-  <!--Password Reset User-->
+  <!--Password reset user-->
   <interface interface=".interfaces.IGSPasswordResetUser"/>
-  <adapter provides=".interfaces.IGSPasswordResetUser"
+  <adapter
+    provides=".interfaces.IGSPasswordResetUser"
     for="Products.CustomUserFolder.interfaces.IGSUserInfo"
     permission="zope2.Public"
     factory=".resetuser.ResetPasswordUser" />
-  <adapter provides=".interfaces.IGSPasswordResetUser"
+  <adapter
+    provides=".interfaces.IGSPasswordResetUser"
     for="Products.CustomUserFolder.interfaces.ICustomUser"
     permission="zope2.Public"
     factory="Products.CustomUserFolder.userinfo.GSUserInfo
@@ -45,37 +61,39 @@
   <class class=".resetuser.ResetPasswordUserFromId">
     <implements interface=".interfaces.IGSPasswordResetUser"/>
   </class>
-  <utility factory=".resetuser.ResetPasswordUserFactory"
+  <utility
+    factory=".resetuser.ResetPasswordUserFactory"
     provides="zope.component.interfaces.IFactory"
     name="groupserver.PasswordResetUser"
     permission="zope.Public"/>
 
-  <!--Reset Password Redirect-->
-  <adapter for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
+  <!--Reset password redirect-->
+  <adapter
+    for="Products.GSRedirect.interfaces.IGSRedirectTraversal"
     factory=".redirect.RedirectPasswordReset"
     provides="Products.GSRedirect.interfaces.IGSRedirect"
     name="password" />
 
-  <!-- Reset Password Page -->
+  <!-- Reset password page -->
   <browser:page
-    for="Products.CustomUserFolder.interfaces.ICustomUser"
     name="reset_password.html"
+    for="Products.CustomUserFolder.interfaces.ICustomUser"
     class=".reset.ResetPasswordForm"
     permission="zope2.ManageProperties" />
-  <!-- Reset Password Error Pages -->
+  <!-- Reset password error pages -->
   <browser:page
-    for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-no-id.html"
+    for="Products.GSContent.interfaces.IGSSiteFolder"
     class=".errors.ResetNoId"
     permission="zope2.Public" />
   <browser:page
-    for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-used.html"
+    for="Products.GSContent.interfaces.IGSSiteFolder"
     class=".errors.ResetIdUsed"
     permission="zope2.Public" />
   <browser:page
-    for="Products.GSContent.interfaces.IGSSiteFolder"
     name="password-reset-not-found.html"
+    for="Products.GSContent.interfaces.IGSSiteFolder"
     class=".errors.ResetIdNotFound"
     permission="zope2.Public" />
 

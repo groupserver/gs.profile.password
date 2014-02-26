@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_email_layout/page">
+  <head>
+    <title metal:fill-slot="title">Password reset
+    <span tal:replace="view/siteInfo/name">Site</span></title>
+  </head>
+  <body>
+    <div metal:fill-slot="body"
+         tal:define="userInfo options/userInfo | view/userInfo;
+                     resetLink options/resetLink | string:${view/siteInfo/url}/r/password/placeholder">
+      <h2>Password reset</h2>
+      <p>
+        Hello
+        <span tal:content="userInfo/name">User</span>,
+      </p>
+      <p>
+        <strong>Click</strong> the following link to reset your password at
+        <span tal:content="view/siteInfo/name">this site</span>.
+      </p>
+      <p>
+        <a tal:attributes="href resetLink"
+           href="#"><code tal:content="resetLink">URL</code></a>
+      </p>
+      <dl>
+        <dt>Why did I get this message?</dt>
+        <dd>
+          Someone, hopefully you, asked for you password to be reset
+          on the site
+          <a tal:attributes="href view/siteInfo/url"
+             href="#" tal:content="view/siteInfo/name">this site</a>.
+        </dd>
+        <dt>What is my current password?</dt>
+        <dd>
+          Follow the above link to set your password to whatever you want.
+          We will never email your password out to you.
+        </dd>
+        <dt>I am uncomfortable with this</dt>
+        <dd>
+          <!--Website address-->
+          If you have any problems or questions send us an email at
+          <a tal:attributes="href view/supportEmail"
+             href="#"><code tal:content="view/siteInfo/get_support_email">this address</code>.</a>
+        </dd>
+      </dl>
+      <p>
+        Kind regards,<br/>
+        <span>The
+        <span tal:content="view/siteInfo/name">Site</span>
+        Team</span>
+      </p>
+    </div><!--a-page-->
+  </body>
+</html>
