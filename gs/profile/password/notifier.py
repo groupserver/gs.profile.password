@@ -27,7 +27,7 @@ class ResetNotifier(object):
         self.context = self.user = user
         self.request = request
         h = self.request.response.getHeader('Content-Type')
-        self.oldContentType = to_ascii(h)
+        self.oldContentType = to_ascii(h if h else 'text/html')
 
     @Lazy
     def textTemplate(self):
