@@ -12,17 +12,22 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+import codecs
 import os
 from setuptools import setup, find_packages
 from version import get_version
 
 version = get_version()
 
+with codecs.open('README.txt', encoding='utf-8') as f:
+    long_description = f.read()
+with codecs.open(os.path.join("docs", "HISTORY.txt"), encoding='utf-8') as f:
+    long_description += '\n' + f.read()
+
 setup(name='gs.profile.password',
     version=version,
     description="Setting and resetting a password on GroupServer.",
-    long_description=open("README.txt").read() + "\n" +
-                      open(os.path.join("docs", "HISTORY.txt")).read(),
+    long_description=long_description,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         "Environment :: Web Environment",
@@ -30,14 +35,14 @@ setup(name='gs.profile.password',
         "Intended Audience :: Developers",
         'License :: OSI Approved :: Zope Public License',
         "Natural Language :: English",
-        "Operating System :: POSIX :: Linux"
+        "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
       ],
-    keywords='profile password authentication groupserver',
+    keywords='profile, password, password reset, authentication, groupserver',
     author='Michael JasonSmith',
     author_email='mpj17@onlinegroups.net',
-    url='http://groupserver.org/',
+    url='https://source.iopen.net/groupserver/gs.profile.password/',
     license='ZPL 2.1',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['gs', 'gs.profile'],
