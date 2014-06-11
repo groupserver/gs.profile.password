@@ -58,12 +58,15 @@ class RequestPasswordResetForm(SiteForm):
             # --=mpj17=-- If we get to this point my faith in
             #   non-determinism was warranted.
 
-            #TODO: think about unverified addresses
+            #TODO:   think about unverified addresses.
+            #        The address that was used is recorded in the audit-table.
 
             # send the message
             notifier = ResetNotifier(u, self.request)
             resetLink = '{0}/r/password/{1}'.format(self.siteInfo.url, resetId)
-            notifier.notify(self.siteInfo, userInfo, resetLink)
+            # --=mpj17=-- Note: Unusually for a notification the password-reset
+            # notification goes to a *specific* address.
+            notifier.notify(self.siteInfo, userInfo, resetLink, email)
 
             s = 'Instructions on how to reset your password have been sent '\
                 'to <code class="email">{0}</code>. Please check your email '\

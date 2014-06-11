@@ -43,12 +43,12 @@ class ResetNotifier(object):
         assert retval
         return retval
 
-    def notify(self, siteInfo, userInfo, resetLink):
+    def notify(self, siteInfo, userInfo, resetLink, toAddr):
         s = 'Password reset at {0} (action required)'
         subject = s.format(siteInfo.name)
         text = self.textTemplate(userInfo=userInfo, resetLink=resetLink)
         html = self.htmlTemplate(userInfo=userInfo, resetLink=resetLink)
         ms = MessageSender(self.context, userInfo)
-        ms.send_message(subject, text, html)
+        ms.send_message(subject, text, html, toAddresses=[toAddr])
         self.request.response.setHeader(to_ascii('Content-Type'),
                                         self.oldContentType)
