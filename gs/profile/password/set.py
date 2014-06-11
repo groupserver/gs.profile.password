@@ -17,7 +17,7 @@ from zope.component import createObject
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.CustomUserFolder.interfaces import IGSUserInfo
-from gs.content.form import SiteForm
+from gs.content.form.base import SiteForm
 from .interfaces import ISetPassword, IGSPasswordUser
 
 

@@ -16,7 +16,7 @@ from __future__ import absolute_import, unicode_literals
 from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from gs.content.form import SiteForm
+from gs.content.form.base import SiteForm
 from gs.core import to_id
 from gs.profile.email.base.emailaddress import address_exists
 from Products.CustomUserFolder.interfaces import IGSUserInfo
