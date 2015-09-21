@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,8 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import unicode_literals
-from urllib import quote
+from __future__ import unicode_literals, absolute_import, print_function
 from zope.cachedescriptors.property import Lazy
 from gs.content.email.base import SiteEmail, TextMixin
 from gs.profile.base.page import ProfilePage
@@ -28,10 +27,7 @@ class ResetMessage(SiteEmail, ProfilePage):
         m = 'Hello,\n\nI recieved a password-reset message for my profile '\
             'at\n    {0}/{1}\nand...'
         msg = m.format(self.siteInfo.url, self.userInfo.url)
-        sub = quote(self.subject)
-        url = 'mailto:{0}?Subject={1}&body={2}'
-        retval = url.format(self.siteInfo.get_support_email(), sub,
-                            quote(msg.encode(UTF8)))
+        retval = self.mailto(self.siteInfo.get_support_email(), self.subject, msg)
         return retval
 
 
