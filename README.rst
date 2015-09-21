@@ -147,7 +147,7 @@ the selector for the password entry, and the selector for the toggle::
 Resources
 =========
 
-- Code repository: https://source.iopen.net/groupserver/gs.profile.password/
+- Code repository: https://github.com/groupserver/gs.profile.password/
 - Questions and comments to http://groupserver.org/groups/development/
 - Report bugs at https://redmine.iopen.net/projects/groupserver/
 
