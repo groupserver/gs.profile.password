@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,7 +11,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -41,7 +41,8 @@ class PasswordUser(object):
         acl_users = site_root.acl_users
         roles = self.user.getRoles()
         domains = self.user.getDomains()
-        acl_users.userFolderEditUser(self.userInfo.id, password, roles, domains)
+        acl_users.userFolderEditUser(self.userInfo.id, password, roles,
+                                     domains)
 
         ca = site_root.cookie_authentication
         ca.credentialsChanged(self.user, self.userInfo.id, password)

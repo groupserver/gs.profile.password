@@ -107,10 +107,11 @@
   <class class=".passworduser.PasswordUser">
     <implements interface=".interfaces.IGSPasswordUser"/>
   </class>
-  <adapter provides=".interfaces.IGSPasswordUser"
+  <adapter
+    provides=".interfaces.IGSPasswordUser"
     for="Products.CustomUserFolder.interfaces.IGSUserInfo"
-    permission="zope2.Public"
-    factory=".passworduser.PasswordUser" />
+    factory=".passworduser.PasswordUser"
+    permission="zope2.Public" />
   <!--Register adaptor from a ICustomUser to a IPasswordUser, via a
     - IGSUserInfo -->
   <adapter provides=".interfaces.IGSPasswordUser"

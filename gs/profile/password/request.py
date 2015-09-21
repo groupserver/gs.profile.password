@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,7 +11,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import, unicode_literals
 from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
@@ -58,25 +58,27 @@ class RequestPasswordResetForm(SiteForm):
             # --=mpj17=-- If we get to this point my faith in
             #   non-determinism was warranted.
 
-            #TODO:   think about unverified addresses.
-            #        The address that was used is recorded in the audit-table.
+            #TODO: think about unverified addresses.
+            #      The address that was used is recorded in the audit-table.
 
             # send the message
             notifier = ResetNotifier(u, self.request)
-            resetLink = '{0}/r/password/{1}'.format(self.siteInfo.url, resetId)
-            # --=mpj17=-- Note: Unusually for a notification the password-reset
-            # notification goes to a *specific* address.
+            l = '{0}/r/password/{1}'
+            resetLink = l.format(self.siteInfo.url, resetId)
+            # --=mpj17=-- Note: Unusually for a notification the
+            # password-reset notification goes to a *specific* address.
             notifier.notify(self.siteInfo, userInfo, resetLink, email)
 
-            s = 'Instructions on how to reset your password have been sent '\
-                'to <code class="email">{0}</code>. Please check your email '\
-                '(including the <em>spam</em> or <em>junk</em> folder).'
+            s = 'Instructions on how to reset your password have been '\
+                'sent to <code class="email">{0}</code>. Please check '\
+                'your email (including the <em>spam</em> or <em>junk</em> '\
+                'folder).'
             self.status = s.format(email)
         else:
             self.auditor.info(REQUEST_FAIL, instanceDatum=email)
             s = 'Your password has <em>not</em> been reset because the '\
-                'address <code class="email">{0}</code> is new to us. Please '\
-                'enter a different address.'
+                'address <code class="email">{0}</code> is new to us. '\
+                'Please enter a different address.'
             self.status = s.format(email)
             self.errors = True
 
